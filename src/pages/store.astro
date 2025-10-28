@@ -1,0 +1,12 @@
+---
+import Page from "../layouts/Page.astro";
+import QuickStore from "../components/react/QuickStore";
+---
+
+<Page title="Shop — Party Wings" description="Quick commerce store for Party Wings — gifts, bouquets, badges and more." pageUrl="/store">
+  <main class="min-h-screen py-12 px-4 bg-gradient-to-b from-indigo-50 to-white">
+    <section class="max-w-7xl mx-auto">
+      <QuickStore client:load />
+    </section>
+  </main>
+</Page>
