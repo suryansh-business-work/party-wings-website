@@ -34,8 +34,13 @@ const {
   </head>
   <body>
     <Header />
-    <main><DynamicBreadcrumb url={pageUrl} /> <slot /></main>
-    <NewsletterSection />
+    <main>
+      <DynamicBreadcrumb url={pageUrl} />
+      <div class="pb-2">
+        <slot />
+      </div>
+      <NewsletterSection />
+    </main>
     <Footer />
   </body>
 </html>

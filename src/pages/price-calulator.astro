@@ -1,0 +1,17 @@
+---
+import Page from "../layouts/Page.astro";
+import PriceCalculator from "../components/react/PriceCalculator";
+
+---
+
+<Page title="Price Calculator | Party Wings" description="Calculate estimated prices for Party Wings services" pageUrl="/price-calulator">
+  <main class="min-h-screen bg-white pt-20 pb-12">
+    <section class="max-w-6xl mx-auto px-4">
+      <h1 class="text-3xl font-bold text-[#2e1163] mb-4">Price Calculator</h1>
+      <p class="text-slate-600 mb-6">Add services below to build a quick price estimate. Each added service appears as a tab you can configure.</p>
+
+      <!-- React calculator mounted client-side -->
+      <PriceCalculator client:load />
+    </section>
+  </main>
+</Page>

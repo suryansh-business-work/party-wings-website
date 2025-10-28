@@ -3,16 +3,36 @@ import LocationSelector from "./react/LocationSelector";
 import CartButton from "./react/CartButton";
 import logo from "../assets/logo.svg";
 import MobileHeader from "./MobileHeader.astro";
+// dynamic nav config
+const nav = [
+  {
+    text: "Services",
+    submenu: [
+      { text: "Decoration Services", href: "/decorations" },
+      { text: "Catering Services", href: "/catering" },
+      { text: "Photographer", href: "/photographer" },
+      { text: "Other Services", href: "/other-service" },
+    ],
+  },
+  {
+    text: "Tools",
+    submenu: [
+      { text: "Guest Management", href: "/tool/guest-management" },
+      { text: "Budget Tools", href: "/budget-tool" },
+      { text: "Checklist", href: "/checklist" },
+    ],
+  },
+  { text: "Price Calulator", href: "/price-calulator" },
+  { text: "About", href: "/about" },
+  { text: "Blog", href: "/blog" },
+  { text: "Contact", href: "/contact" },
+];
 ---
 
-<header
-  class="sticky top-0 z-50 bg-[#2e1163]/95 backdrop-blur-sm transition-shadow duration-200"
->
+<header class="sticky top-0 z-50 bg-[#2e1163]/95 backdrop-blur-sm transition-shadow duration-200">
   <!-- top contact strip -->
   <div class="w-full bg-[#230a44] text-white text-xs">
-    <div
-      class="container mx-auto px-4 sm:px-6 lg:px-8 py-1 flex items-center justify-between"
-    >
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-1 flex items-center justify-between">
       <div class="flex items-center gap-2 md:pl-[140px]">
         <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
         <div class="hidden md:inline-flex">
@@ -21,19 +41,11 @@ import MobileHeader from "./MobileHeader.astro";
       </div>
 
       <div class="flex items-center gap-4">
-        <a
-          href="https://wa.me/1234567890"
-          target="_blank"
-          rel="noopener"
-          class="flex items-center gap-2 hover:text-amber-300"
-        >
+        <a href="https://wa.me/1234567890" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300">
           <i class="fab fa-whatsapp" aria-hidden="true"></i>
           <span class="hidden sm:inline">Chat on WhatsApp</span>
         </a>
-        <a
-          href="tel:+1234567890"
-          class="flex items-center gap-2 hover:text-amber-300"
-        >
+        <a href="tel:+1234567890" class="flex items-center gap-2 hover:text-amber-300">
           <i class="fas fa-phone" aria-hidden="true"></i>
           <span class="hidden sm:inline">+1 234 567 890</span>
         </a>
@@ -41,67 +53,53 @@ import MobileHeader from "./MobileHeader.astro";
     </div>
   </div>
 
-  <div
-    class="container mx-auto px-4 sm:px-6 lg:px-8 header-inner py-4 flex items-center justify-between transition-[padding] duration-200"
-  >
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 header-inner py-4 flex items-center justify-between transition-[padding] duration-200">
     <div class="flex items-center gap-4">
-      <div
-        class="header-logo absolute left-4 w-[96px] h-[96px] md:w-[140px] md:h-[140px] bg-[#2e1163] top-0 p-[6px] z-50 transform transition-transform duration-200"
-      >
+      <div class="header-logo absolute left-4 w-[96px] h-[96px] md:w-[140px] md:h-[140px] bg-[#2e1163] top-0 p-[6px] z-50 transform transition-transform duration-200">
         <a href="/" class="flex items-center justify-center h-full w-full">
-          <img
-            src={logo.src}
-            alt="Party Wings"
-            class="w-full h-full object-contain"
-          />
+          <img src={logo.src} alt="Party Wings" class="w-full h-full object-contain" />
         </a>
       </div>
 
-      <!-- desktop nav -->
-      <nav
-        class="hidden md:flex items-center gap-6 text-sm md:text-base text-white md:pl-[160px]"
-      >
-        <div class="relative inline-block">
-          <button
-            id="services-toggle"
-            aria-haspopup="true"
-            aria-expanded="false"
-            class="hover:text-amber-500 focus:outline-none transition-colors"
-          >
-            Services
-          </button>
+      <!-- desktop nav (rendered from config) -->
+      <nav class="hidden md:flex items-center gap-6 text-sm md:text-base text-white md:pl-[160px]">
+        {
+          nav.map((item, i) => (
+            item.submenu
+              ? (
+                <div class="relative inline-block">
+                  <button
+                    data-submenu-toggle
+                    data-index={i}
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    aria-controls={`submenu-${i}`}
+                    class="hover:text-amber-500 focus:outline-none transition-colors"
+                  >
+                    {item.text}
+                  </button>
 
-          <div
-            id="services-menu"
-            class="absolute left-0 top-full mt-2 w-56 bg-white dark:bg-slate-800 border rounded-md p-3 shadow-lg z-20 invisible opacity-0 translate-y-2 transform transition-all duration-200 text-slate-700 dark:text-slate-200"
-            role="menu"
-            aria-labelledby="services-toggle"
-          >
-            <ul class="space-y-2 text-sm">
-              <li>
-                <a href="#decorations" class="block hover:text-amber-300"
-                  >Decoration Services</a
-                >
-              </li>
-              <li>
-                <a href="#catering" class="block hover:text-amber-300"
-                  >Catering Services</a
-                >
-              </li>
-              <li>
-                <a href="#other" class="block hover:text-amber-300"
-                  >Other Services</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <a href="/planner" class="hover:text-amber-300">Planner</a>
-        <a href="/photographer" class="hover:text-amber-300">Photographer</a>
-        <a href="/about" class="hover:text-amber-300">About</a>
-        <a href="/blog" class="hover:text-amber-300">Blog</a>
-        <a href="/contact" class="hover:text-amber-300">Contact</a>
+                  <div
+                    id={`submenu-${i}`}
+                    class="absolute left-0 top-full mt-2 w-56 bg-white dark:bg-slate-800 border rounded-md p-3 shadow-lg z-20 invisible opacity-0 translate-y-2 transform transition-all duration-200 text-slate-700 dark:text-slate-200"
+                    role="menu"
+                    aria-labelledby={`submenu-${i}`}
+                  >
+                    <ul class="space-y-2 text-sm">
+                      {item.submenu.map((s) => (
+                        <li><a href={s.href} class="block hover:text-amber-300">{s.text}</a></li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )
+              : (
+                <div class="inline-block">
+                  <a href={item.href} class="hover:text-amber-300">{item.text}</a>
+                </div>
+              )
+          ))
+        }
       </nav>
     </div>
 
@@ -117,48 +115,31 @@ import MobileHeader from "./MobileHeader.astro";
 
 <script>
   (function () {
-    // services submenu animation (desktop)
-    const btn = document.getElementById("services-toggle");
-    const menu = document.getElementById("services-menu");
-    if (btn && menu) {
-      const menuEl = menu;
+    // handle multiple submenu toggles dynamically
+    const toggles = Array.from(document.querySelectorAll('[data-submenu-toggle]'));
+    toggles.forEach(btn => {
+      const idx = btn.getAttribute('data-index');
+      const menu = document.getElementById(`submenu-${idx}`)!;
+      if (!menu) return;
       let hideTimeout = 0;
+
       function openMenu() {
         clearTimeout(hideTimeout);
-        menuEl.classList.remove("invisible", "opacity-0", "translate-y-2");
-        menuEl.classList.add("visible", "opacity-100", "translate-y-0");
-        btn?.setAttribute("aria-expanded", "true");
+        menu.classList.remove('invisible','opacity-0','translate-y-2');
+        menu.classList.add('visible','opacity-100','translate-y-0');
+        btn.setAttribute('aria-expanded','true');
       }
       function closeMenu() {
-        menuEl.classList.remove("visible", "opacity-100", "translate-y-0");
-        menuEl.classList.add("opacity-0", "translate-y-2");
-        btn?.setAttribute("aria-expanded", "false");
-        // hide after animation
-        hideTimeout = window.setTimeout(
-          () => menuEl.classList.add("invisible"),
-          220,
-        );
+        menu.classList.remove('visible','opacity-100','translate-y-0');
+        menu.classList.add('opacity-0','translate-y-2');
+        btn.setAttribute('aria-expanded','false');
+        hideTimeout = window.setTimeout(() => menu.classList.add('invisible'), 220);
       }
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        if (btn?.getAttribute("aria-expanded") === "true") closeMenu();
-        else openMenu();
-      });
-      document.addEventListener("click", (e) => {
-        const target = e.target;
-        if (
-          target instanceof Node &&
-          !menuEl.contains(target) &&
-          target !== btn
-        )
-          closeMenu();
-      });
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closeMenu();
-      });
-      menuEl
-        .querySelectorAll("a")
-        .forEach((a) => a.addEventListener("click", closeMenu));
-    }
+
+      btn.addEventListener('click', (e) => { e.stopPropagation(); if (btn.getAttribute('aria-expanded') === 'true') closeMenu(); else openMenu(); });
+      menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+      document.addEventListener('click', (e) => { if (!(e.target instanceof Node)) return; if (!menu.contains(e.target) && e.target !== btn) closeMenu(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+    });
   })();
 </script>
