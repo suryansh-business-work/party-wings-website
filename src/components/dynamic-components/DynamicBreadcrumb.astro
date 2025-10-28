@@ -1,0 +1,52 @@
+---
+const { url = "" } = Astro.props;
+
+// Helper to turn /about/team/lead into [{name: "Home", href: "/"}, ...]
+function getBreadcrumbItems(url: string) {
+  if (!url) return [];
+  const segments = url.replace(/^\//, "").split("/").filter(Boolean);
+  const items = [{ name: "Home", href: "/" }];
+  let path = "";
+  for (const segment of segments) {
+    path += "/" + segment;
+    items.push({
+      name: segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, " "),
+      href: path,
+    });
+  }
+  return items;
+}
+
+const items = getBreadcrumbItems(url);
+---
+
+{items.length > 0 && url.length > 1 && (
+  <nav aria-label="Breadcrumb" class="max-w-6xl mx-auto p-3">
+    <ol class="flex items-center gap-1 text-sm text-gray-700">
+      {items.map((item, idx) => (
+        <li class="flex items-center">
+          {idx > 0 && (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="size-4 mx-1 rtl:rotate-180"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          )}
+          {idx < items.length - 1 ? (
+            <a href={item.href} class="block transition-colors hover:text-gray-900">{item.name}</a>
+          ) : (
+            <span class="block font-semibold text-indigo-700" aria-current="page">{item.name}</span>
+          )}
+        </li>
+      ))}
+    </ol>
+  </nav>
+)}

@@ -1,0 +1,230 @@
+---
+import Page from "../layouts/Page.astro";
+---
+
+<Page
+  title="Contact | Botify.life"
+  description="Contact Botify.life for questions, feedback, or support."
+  pageUrl="/contact"
+>
+  <main
+    class="bg-gradient-to-b from-indigo-50 to-white min-h-screen pt-10 pb-12 px-4"
+  >
+    <section class="max-w-7xl mx-auto rounded-2xl bg-white shadow-lg p-8 mt-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2 text-left">
+        How can we help you?
+      </h1>
+      <div class="mb-8">
+        <input
+          type="text"
+          placeholder="Type keywords to find answers"
+          class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:outline-none text-base shadow-sm"
+        />
+      </div>
+      <!-- <div class="grid md:grid-cols-3 gap-6 mb-10">
+        <div class="bg-gray-50 rounded-xl border border-gray-100 p-6 hover:shadow transition">
+          <h2 class="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+            <span class="inline-block w-2 h-2 bg-blue-600 rounded-full"></span>
+            Billing & Plans
+          </h2>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="text-blue-700 hover:underline">Botify.life plans & prices</a></li>
+            <li><a href="#" class="text-blue-700 hover:underline">Switch plans and add-ons</a></li>
+            <li><a href="#" class="text-blue-700 hover:underline">I can't log in to Botify.life</a></li>
+            <li><a href="#" class="text-blue-700 hover:underline">The Disney Bundle</a></li>
+            <li><a href="#" class="text-blue-700 hover:underline">Student Discount on Botify.life</a></li>
+          </ul>
+        </div>
+        <div class="bg-gray-50 rounded-xl border border-gray-100 p-6 hover:shadow transition">
+          <h2 class="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+            <span class="inline-block w-2 h-2 bg-green-600 rounded-full"></span>
+            Using Botify.life
+          </h2>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="text-blue-700 hover:underline">Parental Controls</a></li>
+            <li><a href="#" class="text-blue-700 hover:underline">Devices to watch Botify.life</a></li>
+            <li><a href="#" class="text-blue-700 hover:underline">Home location for Live TV</a></li>
+            <li><a href="#" class="text-blue-700 hover:underline">Live TV Guide</a></li>
+            <li><a href="#" class="text-blue-700 hover:underline">Fix buffering issues</a></li>
+          </ul>
+        </div>
+        <div class="bg-gray-50 rounded-xl border border-gray-100 p-6 hover:shadow transition">
+          <h2 class="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+            <span class="inline-block w-2 h-2 bg-purple-600 rounded-full"></span>
+            What’s on Botify.life
+          </h2>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="text-blue-700 hover:underline">NEW this month!</a></li>
+            <li><a href="#" class="text-blue-700 hover:underline">Sports Add-on for Live TV</a></li>
+            <li><a href="#" class="text-blue-700 hover:underline">Watch live sports</a></li>
+            <li><a href="#" class="text-blue-700 hover:underline">FX shows & movies</a></li>
+            <li><a href="#" class="text-blue-700 hover:underline">Super Bowl 2022</a></li>
+          </ul>
+        </div>
+      </div> -->
+      <div
+        class="flex flex-col md:flex-row md:items-center md:justify-between mb-12 gap-4"
+      >
+        <div>
+          <h2 class="text-lg font-semibold text-gray-900 mb-1">
+            Not what you were looking for?
+          </h2>
+          <p class="text-gray-600 text-sm">
+            Browse through all of our Help Center articles
+          </p>
+        </div>
+        <a
+          href="#"
+          class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg font-medium shadow hover:bg-blue-700 transition"
+          >Get started</a
+        >
+      </div>
+      <div class="grid md:grid-cols-2 gap-12">
+        <div>
+          <h2 class="text-lg font-semibold text-gray-900 mb-4">
+            Points of contact
+          </h2>
+          <!-- <div class="mb-4">
+            <div class="font-medium text-gray-700">U.S. Botify.life</div>
+            <div class="text-gray-500 text-sm">1234 Main St, Suite 100,<br />Springfield, USA 12345</div>
+          </div> -->
+          <div class="mb-4">
+            <div class="font-medium text-gray-700">Information & Sales</div>
+            <a
+              href="mailto:sales@botify.life"
+              class="text-blue-700 text-sm hover:underline">sales@botify.life</a
+            >
+          </div>
+          <div class="mb-4">
+            <div class="font-medium text-gray-700">Support</div>
+            <a
+              href="mailto:support@botify.life"
+              class="text-blue-700 text-sm hover:underline"
+              >support@botify.life</a
+            >
+          </div>
+          <div class="mb-4">
+            <div class="font-medium text-gray-700">
+              Verification of Employment
+            </div>
+            <a
+              href="mailto:hr@botify.life"
+              class="text-blue-700 text-sm hover:underline">hr@botify.life</a
+            >
+          </div>
+          <!-- <h2 class="text-lg font-semibold text-gray-900 mt-8 mb-4">Our offices around the world</h2>
+          <div class="mb-2">
+            <div class="font-medium text-gray-700">Canada</div>
+            <div class="text-gray-500 text-sm">987 King St W, Suite 200,<br />Toronto, ON M5V 1M1</div>
+          </div>
+          <div class="mb-2">
+            <div class="font-medium text-gray-700">Germany</div>
+            <div class="text-gray-500 text-sm">12 Hauptstrasse,<br />10115 Berlin</div>
+          </div>
+          <div class="mb-2">
+            <div class="font-medium text-gray-700">France</div>
+            <div class="text-gray-500 text-sm">55 Rue de Lyon,<br />75012 Paris</div>
+          </div> -->
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">
+            Still need help?
+          </h2>
+          <form
+            class="space-y-6 bg-gray-50 rounded-xl border border-gray-100 p-6 shadow-sm"
+            name="contact"
+            method="POST"
+            data-netlify="true"
+          >
+            <input type="hidden" name="form-name" value="contact" />
+            <div>
+              <label
+                for="email"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Your email address <span class="text-xs text-gray-400"
+                  >(So we can reply to you)</span
+                >
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="name@botify.life"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+                autocomplete="email"
+              />
+            </div>
+            <div>
+              <label
+                for="topic"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >Topic</label
+              >
+              <select
+                id="topic"
+                name="topic"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+              >
+                <option value="">Select a topic</option>
+                <option value="billing">Billing & Plans</option>
+                <option value="usage">Using Botify.life</option>
+                <option value="content">What’s on Botify.life</option>
+                <option value="support">Support</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label
+                for="subject"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >Subject</label
+              >
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                required
+                placeholder="Let us know how we can help you"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label
+                for="message"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >Your message</label
+              >
+              <textarea
+                id="message"
+                name="message"
+                rows="5"
+                required
+                placeholder="Leave a comment..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:outline-none resize-vertical"
+              ></textarea>
+            </div>
+            <div class="text-xs text-gray-500">
+              By submitting this form, you confirm that you have read and agree
+              to our <a
+                href="/policies/terms"
+                class="text-blue-700 hover:underline">Terms of Service</a
+              > and <a
+                href="/policies/privacy"
+                class="text-blue-700 hover:underline">Privacy Statement</a
+              >.
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-blue-400"
+            >
+              Send message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+</Page>

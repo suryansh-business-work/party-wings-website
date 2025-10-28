@@ -1,0 +1,20 @@
+
+---
+import Layout from '../layouts/Layout.astro';
+import HomeBanner from '../components/banners/HomeBanner.astro';
+import App from '../components/react/App';
+import Page from '../layouts/Page.astro';
+const services = [
+	{ id: 'decor-balloon', title: 'Balloon Decoration', category: 'Decoration', price: 'From $50', description: 'Fun and colourful balloon décor for any theme.', image: 'https://specialyou.in/cdn/shop/files/71ILY61NuaL.jpg?v=1755520157' },
+	{ id: 'decor-background', title: 'Background Decoration', category: 'Decoration', price: 'From $120', description: 'Custom backgrounds and stage setups.', image: 'https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg' },
+	{ id: 'catering-home', title: 'Home Catering', category: 'Catering', price: 'From $200', description: 'Delicious home-style catering packages.', image: 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg' },
+	{ id: 'planner-basic', title: 'Planner Package (Basic)', category: 'Planner', price: '$99', description: 'Essential planning support and coordination.', image: 'https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg' },
+	{ id: 'photography', title: 'Photographer', category: 'Photography', price: 'From $150', description: 'Photo & video packages for events.', image: 'https://images.pexels.com/photos/362508/pexels-photo-362508.jpeg' },
+	{ id: 'other-cake', title: 'Cake Order', category: 'Other', price: 'Varies', description: 'Custom cakes and dessert orders.', image: 'https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg' }
+];
+---
+
+<Page title="Party Wings — Celebrate with style">
+	<HomeBanner />
+	<App client:load services={services} />
+</Page>

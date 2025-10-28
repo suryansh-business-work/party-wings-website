@@ -1,0 +1,98 @@
+---
+// Mobile-only header/panel (no Location / Contact on mobile)
+import logo from "../assets/logo.svg";
+---
+<nav class="md:hidden relative">
+  <!-- hamburger toggle (top-right) -->
+  <div class="absolute right-4 top-3 z-[10001]">
+    <button id="mobile-menu-toggle" aria-controls="mobile-menu-panel" aria-expanded="false" class="p-2 rounded-md text-white bg-white/5 hover:bg-white/10">
+      <i class="fas fa-bars text-2xl" aria-hidden="true"></i>
+      <span class="sr-only">Open menu</span>
+    </button>
+  </div>
+
+  <!-- full screen panel (hidden by default) - apply BG on the panel itself so it always shows -->
+  <div id="mobile-menu-panel" class="fixed inset-0 z-[10000] hidden bg-[#2e1163] text-white" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="relative min-h-screen w-full overflow-auto flex flex-col bg-[#2e1163]">
+      <div class="flex items-center justify-between p-4 pt-6">
+        <a href="/" class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-white/10 rounded p-1 flex items-center justify-center">
+            <img src={logo.src} alt="Party Wings" class="w-full h-full object-contain" />
+          </div>
+          <span class="font-extrabold text-lg">Party Wings</span>
+        </a>
+
+        <button id="mobile-menu-close" aria-label="Close menu" class="p-2 rounded-md text-white hover:bg-white/10">
+          <i class="fas fa-times text-2xl" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div class="px-6 pt-6 pb-8 space-y-6 flex-1">
+        <div class="text-xl font-bold">Make your party unforgettable 🎉</div>
+
+        <ul class="space-y-4 text-lg">
+          <li><a href="#decorations" class="block py-2 px-3 rounded hover:bg-white/5">Decoration Services</a></li>
+          <li><a href="#catering" class="block py-2 px-3 rounded hover:bg-white/5">Catering Services</a></li>
+          <li><a href="#photography" class="block py-2 px-3 rounded hover:bg-white/5">Photography</a></li>
+          <li><a href="/planner" class="block py-2 px-3 rounded hover:bg-white/5">Planner</a></li>
+          <li><a href="/about" class="block py-2 px-3 rounded hover:bg-white/5">About</a></li>
+          <li><a href="/blog" class="block py-2 px-3 rounded hover:bg-white/5">Blog</a></li>
+        </ul>
+
+        <div class="pt-4">
+          <a href="/contact" class="inline-block w-full text-center px-4 py-3 bg-amber-500 rounded-md font-semibold">Get a Quote</a>
+        </div>
+
+        <div class="mt-8 text-sm text-white/70">Tip: Open the cart icon to view your selected services.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const toggle = document.getElementById('mobile-menu-toggle');
+      const panel = document.getElementById('mobile-menu-panel');
+      const closeBtn = document.getElementById('mobile-menu-close');
+      if (!toggle || !panel) return;
+
+      function lockScroll() {
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+      }
+      function unlockScroll() {
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+      }
+
+      function openPanel() {
+        if (!panel || !toggle) return;
+        panel.classList.remove('hidden');
+        panel.setAttribute('aria-hidden', 'false');
+        toggle.setAttribute('aria-expanded', 'true');
+        lockScroll();
+      }
+      function closePanel() {
+        if (!panel || !toggle) return;
+        panel.classList.add('hidden');
+        panel.setAttribute('aria-hidden', 'true');
+        toggle.setAttribute('aria-expanded', 'false');
+        unlockScroll();
+      }
+
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (panel.classList.contains('hidden')) openPanel(); else closePanel();
+      });
+      if (closeBtn) closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closePanel(); });
+
+      // close when any menu link clicked
+      panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => closePanel()));
+      // outside click + ESC
+      document.addEventListener('click', (e) => {
+        if (!(e.target instanceof Node)) return;
+        if (panel && toggle && !panel.classList.contains('hidden') && !panel.contains(e.target) && !toggle.contains(e.target)) closePanel();
+      });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel(); });
+    })();
+  </script>
+</nav>

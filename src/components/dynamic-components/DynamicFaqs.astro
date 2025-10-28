@@ -1,0 +1,42 @@
+---
+const {
+  title = "Frequently Asked Questions",
+  faqs = [
+    {
+      question: "What is Lorem Ipsum?",
+      answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. It has been the industry's standard dummy text ever since the 1500s."
+    },
+    {
+      question: "Why do we use it?",
+      answer: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+    },
+    {
+      question: "Where does it come from?",
+      answer: "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC."
+    },
+    {
+      question: "Where can I get some?",
+      answer: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form."
+    }
+  ]
+} = Astro.props;
+---
+
+<!-- FAQ Section -->
+<section class="max-w-5xl mx-auto px-4 py-12">
+  <h2 class="text-2xl font-bold text-indigo-700 mb-8 text-center">
+    {title}
+  </h2>
+  <div class="space-y-4">
+    {faqs.map((faq: { question: unknown; answer: unknown; }) => (
+      <details class="bg-white rounded-xl shadow p-4">
+        <summary class="font-semibold cursor-pointer text-indigo-700">
+          {faq.question}
+        </summary>
+        <p class="mt-2 text-gray-600">
+          {faq.answer}
+        </p>
+      </details>
+    ))}
+  </div>
+</section>

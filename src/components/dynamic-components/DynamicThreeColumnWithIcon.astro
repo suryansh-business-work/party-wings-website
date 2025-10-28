@@ -1,0 +1,39 @@
+---
+const {
+  title = "Lorem Ipsum Dolor Sit Amet",
+  columns = [
+    {
+      icon: "fa-solid fa-gears text-4xl text-indigo-600 mb-4",
+      heading: "Column One",
+      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod, urna eu tincidunt consectetur.",
+    },
+    {
+      icon: "fa-solid fa-brain text-4xl text-indigo-600 mb-4",
+      heading: "Column Two",
+      text: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+    },
+    {
+      icon: "fa-solid fa-users text-4xl text-indigo-600 mb-4",
+      heading: "Column Three",
+      text: "Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    },
+  ],
+} = Astro.props;
+---
+
+<section class="max-w-5xl mx-auto px-4 py-12">
+  <h2 class="text-2xl font-bold text-indigo-700 mb-8 text-center">
+    {title}
+  </h2>
+  <div class="grid md:grid-cols-3 gap-8">
+    {columns.map((col: { icon: string | null | undefined; heading: unknown; text: unknown; }, idx: any) => (
+      <div
+        class="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center text-center hover:shadow-2xl transition"
+      >
+        <i class={col.icon}></i>
+        <h3 class="font-semibold text-lg mb-2">{col.heading}</h3>
+        <p class="text-gray-600">{col.text}</p>
+      </div>
+    ))}
+  </div>
+</section>

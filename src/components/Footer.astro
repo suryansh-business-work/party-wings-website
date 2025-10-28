@@ -1,0 +1,211 @@
+---
+import logo from "../assets/logo.svg";
+
+const company = [
+  { text: "About us", href: "/about" },
+  { text: "Careers", href: "/careers" },
+  { text: "Press", href: "/press" },
+  { text: "Advertising", href: "/advertising" },
+  { text: "Terms of use", href: "/terms" },
+  { text: "Privacy policy", href: "/privacy" },
+];
+
+const planning = [
+  { text: "Vendor Directory", href: "/vendors" },
+  { text: "Planner", href: "/planner" },
+  { text: "Budget tool", href: "/budget" },
+  { text: "Checklists", href: "/checklist" },
+  { text: "Guest list", href: "/guest-list" },
+];
+
+const more = [
+  { text: "Blog", href: "/blog" },
+  { text: "Gallery", href: "/gallery" },
+  { text: "FAQ", href: "/faq" },
+  { text: "Contact", href: "/contact" },
+];
+
+const categories = [
+  { text: "Welcome Baby Decoration", href: "#welcome-baby-decoration" },
+  { text: "Kids Birthday Decoration", href: "#kids-birthday-decoration" },
+  { text: "Premium Kids Decoration", href: "#premium-kids-decoration" },
+  { text: "Anniversary Decoration", href: "#anniversary-decoration" },
+  { text: "Birthday Decoration", href: "#birthday-decoration" },
+  { text: "Love theme Decoration", href: "#love-theme-decoration" },
+  { text: "Garland Decoration", href: "#garland-decoration" },
+  { text: "Ring Setup Decoration", href: "#ring-setup-decoration" },
+  { text: "Baby Shower Decoration", href: "#baby-shower-decoration" },
+  { text: "Bachelor Party Decoration", href: "#bachelor-party-decoration" },
+  { text: "Marquee Decoration", href: "#marquee-decoration" },
+  { text: "Special Occasion Decoration", href: "#special-occasion-decoration" },
+  { text: "Car Dikki Decoration", href: "#car-dikki-decoration" },
+  { text: "Canopy Decoration", href: "#canopy-decoration" },
+  { text: "Games & Activities", href: "#games-and-activities" },
+  { text: "Wedding Decoration", href: "#wedding-decoration" },
+  { text: "Premium Decorations", href: "#premium-decorations" },
+  { text: "Just Married Decoration", href: "#just-married-decoration" },
+];
+
+const social = [
+  { icon: "fab fa-facebook-f", href: "https://facebook.com" },
+  { icon: "fab fa-instagram", href: "https://instagram.com" },
+  { icon: "fab fa-x-twitter", href: "https://twitter.com" },
+  { icon: "fab fa-pinterest", href: "https://pinterest.com" },
+];
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer
+  class="bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300"
+>
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-8">
+      <!-- Company -->
+      <div class="space-y-3">
+        <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100">
+          Company
+        </h3>
+        <ul class="space-y-2 text-sm">
+          {
+            company.map((item) => (
+              <li>
+                <a href={item.href} class="hover:text-amber-500">
+                  {item.text}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Planning tools -->
+      <div class="space-y-3">
+        <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100">
+          Planning tools
+        </h3>
+        <ul class="space-y-2 text-sm">
+          {
+            planning.map((item) => (
+              <li>
+                <a href={item.href} class="hover:text-amber-500">
+                  {item.text}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- More -->
+      <div class="space-y-3">
+        <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100">
+          More
+        </h3>
+        <ul class="space-y-2 text-sm">
+          {
+            more.map((item) => (
+              <li>
+                <a href={item.href} class="hover:text-amber-500">
+                  {item.text}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Categories (wide column spanning 2 cols on md+) -->
+      <div class="md:col-span-2">
+        <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100">
+          Categories
+        </h3>
+        <nav aria-label="Footer categories" class="mt-3">
+          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            {
+              categories.map((c) => (
+                <li>
+                  <a
+                    href={c.href}
+                    class="block px-2 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-amber-500 transition"
+                  >
+                    {c.text}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+
+      <!-- App & Social -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-3">
+          <img src={logo.src} alt="Party Wings" class="h-10 w-auto" />
+          <div>
+            <div
+              class="text-sm font-semibold text-slate-900 dark:text-slate-100"
+            >
+              Party Wings
+            </div>
+            <div class="text-xs text-slate-500 dark:text-slate-400">
+              Delighting hosts with vibrant parties
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-semibold mb-2">Get the app</h4>
+          <div class="flex gap-2">
+            <a
+              href="#"
+              class="inline-block bg-black text-white text-xs px-3 py-2 rounded"
+              >App Store</a
+            >
+            <a
+              href="#"
+              class="inline-block bg-black text-white text-xs px-3 py-2 rounded"
+              >Google Play</a
+            >
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-semibold mb-2">Follow us</h4>
+          <div class="flex gap-3">
+            {
+              social.map((s) => (
+                <a
+                  href={s.href}
+                  class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-amber-500 hover:text-white transition"
+                >
+                  <i class={s.icon} aria-hidden="true" />
+                  <span class="sr-only">Open social</span>
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="bg-slate-50 dark:bg-slate-800 border-t border-slate-100 dark:border-slate-700"
+  >
+    <div
+      class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500"
+    >
+      <div class="flex items-center gap-3">
+        <img src={logo.src} alt="Party Wings" class="h-8 w-auto" />
+        <span>© {currentYear} Party Wings — All rights reserved.</span>
+      </div>
+
+      <div class="mt-3 md:mt-0 flex items-center gap-4">
+        <a href="/privacy" class="hover:text-amber-500">Privacy</a>
+        <a href="/terms" class="hover:text-amber-500">Terms</a>
+        <a href="/contact" class="hover:text-amber-500">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>

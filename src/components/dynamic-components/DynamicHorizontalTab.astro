@@ -1,0 +1,132 @@
+---
+const { heading = "Agentic AI Types", tabs = [] } = Astro.props;
+---
+
+<style>
+.tab-fade {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s cubic-bezier(.4,0,.2,1), transform 0.3s cubic-bezier(.4,0,.2,1);
+}
+.tab-fade.tab-fade-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+
+<div class="w-full max-w-5xl mx-auto my-8 p-5" id="simple-horizontal-tabs">
+  <!-- Tab Heading -->
+  <h2 class="text-2xl font-bold mb-8 text-gray-800 text-center">{heading}</h2>
+  <!-- Tab Buttons -->
+  <div
+    class="flex border-b border-gray-200 mb-4 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+    style="scrollbar-width: thin; white-space: nowrap; overflow-y: hidden; max-height: 60px;"
+    role="tablist"
+    aria-label={heading}
+    id="tablist-scroll"
+  >
+    {tabs.map((tab: { label: unknown; description: unknown; }, idx: unknown) => (
+      <button
+        type="button"
+        class={`cursor-pointer tab-btn px-4 py-2 -mb-px border-b-2 border-transparent text-gray-600 focus:outline-none transition-colors flex-shrink-0 ${
+          idx === 0 ? 'border-blue-600 text-blue-600 bg-blue-900' : ''
+        }`}
+        data-tab={idx}
+        aria-selected={idx === 0}
+        aria-controls={`tab-panel-${idx}`}
+        id={`tab-btn-${idx}`}
+        role="tab"
+        tabindex={idx === 0 ? 0 : -1}
+        style="white-space: nowrap;"
+      >
+        <div class={`font-semibold ${idx === 0 ? 'text-white' : ''}`}>{tab.label}</div>
+        <div class={`text-xs ${idx === 0 ? 'text-white/80' : 'text-gray-400'}`}>{tab.description}</div>
+      </button>
+    ))}
+  </div>
+  <!-- Tab Content -->
+  <div
+    class="p-6 bg-white border border-gray-100 rounded shadow tab-fade tab-fade-active"
+    id="tab-content"
+    data-tab-index="0"
+    data-tabs={JSON.stringify(tabs)}
+    role="tabpanel"
+    tabindex="0"
+    aria-labelledby="tab-btn-0"
+  >
+    {tabs[0]?.content}
+  </div>
+</div>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", function () {
+    const tabBtns = document.querySelectorAll("#simple-horizontal-tabs .tab-btn");
+    const tabContent = document.getElementById("tab-content");
+    const tabsData = JSON.parse(tabContent.getAttribute("data-tabs"));
+    let current = 0;
+
+    function activateTab(idx, focus = true, doScroll = false) {
+      tabBtns.forEach((btn, i) => {
+        btn.classList.toggle("border-blue-600", i === idx);
+        btn.classList.toggle("text-blue-600", i === idx);
+        btn.classList.toggle("bg-blue-900", i === idx); // dark background on selected
+        btn.classList.toggle("bg-blue-50", i === idx && false); // remove light bg if present
+        // Update heading and description color
+        const headingDiv = btn.querySelector('.font-semibold');
+        const descDiv = btn.querySelector('.text-xs');
+        if (headingDiv && descDiv) {
+          if (i === idx) {
+            headingDiv.classList.add("text-white");
+            descDiv.classList.remove("text-gray-400");
+            descDiv.classList.add("text-white/80");
+          } else {
+            headingDiv.classList.remove("text-white");
+            descDiv.classList.remove("text-white/80");
+            descDiv.classList.add("text-gray-400");
+          }
+        }
+        btn.setAttribute("aria-selected", i === idx ? "true" : "false");
+        btn.setAttribute("tabindex", i === idx ? "0" : "-1");
+        if (i === idx && focus) btn.focus();
+      });
+
+      // Animation: fade out, then change content, then fade in
+      tabContent.classList.remove("tab-fade-active");
+      setTimeout(() => {
+        tabContent.setAttribute("data-tab-index", idx);
+        tabContent.setAttribute("aria-labelledby", `tab-btn-${idx}`);
+        tabContent.innerHTML = tabsData[idx].content;
+        tabContent.classList.add("tab-fade-active");
+      }, 200);
+
+      // Only scroll into view if requested (i.e., on click)
+      if (doScroll) {
+        tabBtns[idx].scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+      }
+
+      current = idx;
+    }
+
+    tabBtns.forEach((btn, idx) => {
+      btn.addEventListener("click", () => activateTab(idx, true, true)); // scroll on click
+      btn.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+          e.preventDefault();
+          activateTab((idx + 1) % tabBtns.length);
+        } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+          e.preventDefault();
+          activateTab((idx - 1 + tabBtns.length) % tabBtns.length);
+        } else if (e.key === "Home") {
+          e.preventDefault();
+          activateTab(0);
+        } else if (e.key === "End") {
+          e.preventDefault();
+          activateTab(tabBtns.length - 1);
+        }
+      });
+    });
+
+    // Ensure tab selection is correct on page load
+    activateTab(0, false);
+  });
+</script>
