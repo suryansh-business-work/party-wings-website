@@ -14,6 +14,14 @@ export const headerMenu = [
       { text: "Guest Management", href: "/tools/guest-management", description: "Manage guest lists & RSVPs", icon: "fas fa-users" },
       { text: "ToDos", href: "/tools/todos", description: "Checklist and task manager", icon: "fas fa-check-square" }    ],
   },
+  {
+    text: "Policies",
+    submenu: [
+      { text: "Privacy", href: "/policies/privacy", description: "Manage guest lists & RSVPs", icon: "fas fa-check-square" },
+      { text: "Terms & Conditions", href: "/policies/terms-and-conditions", description: "Checklist and task manager", icon: "fas fa-check-square" },
+      { text: "Refund Policy", href: "/policies/refund-policy", description: "Checklist and task manager", icon: "fas fa-check-square" }
+    ],
+  },
   { text: "Price Calulator", href: "/price-calulator", description: "Quick price estimates", icon: "fas fa-calculator" },
   { text: "About", href: "/about", description: "Learn about Party Wings", icon: "fas fa-info-circle" },
   { text: "Blog", href: "/blog", description: "Tips, stories and ideas", icon: "fas fa-blog" },
