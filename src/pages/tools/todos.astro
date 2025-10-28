@@ -1,0 +1,16 @@
+---
+import Page from "../../layouts/Page.astro";
+import TodoTool from "../../components/react/TodoTool";
+
+---
+
+<Page title="ToDos | Party Wings" description="Simple todo tool" pageUrl="/tools/todos">
+  <main class="min-h-screen bg-white pt-20 pb-12">
+    <section class="max-w-4xl mx-auto px-4">
+      <h1 class="text-3xl font-bold text-[#2e1163] mb-4">ToDos</h1>
+      <p class="text-slate-600 mb-6">Small todo tool to manage tasks for events. Local-only (stored in your browser).</p>
+
+      <TodoTool client:load />
+    </section>
+  </main>
+</Page>

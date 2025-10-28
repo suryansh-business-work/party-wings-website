@@ -1,6 +1,9 @@
 ---
 // Mobile-only header/panel (no Location / Contact on mobile)
 import logo from "../assets/logo.svg";
+import { headerMenu } from "../assets/data/header-menu";
+
+const menu: any = headerMenu;
 ---
 <nav class="md:hidden relative">
   <!-- hamburger toggle (top-right) -->
@@ -31,14 +34,42 @@ import logo from "../assets/logo.svg";
         <div class="text-xl font-bold">Make your party unforgettable 🎉</div>
 
         <ul class="space-y-4 text-lg">
-          <li><a href="#decorations" class="block py-2 px-3 rounded hover:bg-white/5">Decoration Services</a></li>
-          <li><a href="#catering" class="block py-2 px-3 rounded hover:bg-white/5">Catering Services</a></li>
-          <li><a href="#photography" class="block py-2 px-3 rounded hover:bg-white/5">Photography</a></li>
-          <li><a href="/planner" class="block py-2 px-3 rounded hover:bg-white/5">Planner</a></li>
-          <li><a href="/about" class="block py-2 px-3 rounded hover:bg-white/5">About</a></li>
-          <li><a href="/blog" class="block py-2 px-3 rounded hover:bg-white/5">Blog</a></li>
+          {menu.map((item: any) => (
+            <li>
+              {item.submenu ? (
+                <details class="bg-white/5 rounded">
+                  <summary class="py-2 px-3 cursor-pointer flex items-center justify-between">
+                    <span>{item.text}</span>
+                    <span aria-hidden class="ml-3">▾</span>
+                  </summary>
+                  <ul class="pl-4 mt-2 space-y-2">
+                    {item.submenu.map((sub: any) => (
+                      <li>
+                        {sub.submenu ? (
+                          <details class="bg-white/5 rounded">
+                            <summary class="py-2 px-3 cursor-pointer flex items-center justify-between">
+                              <span>{sub.text}</span>
+                              <span aria-hidden class="ml-3">▾</span>
+                            </summary>
+                            <ul class="pl-4 mt-2 space-y-2">
+                              {sub.submenu.map((s2: any) => (
+                                <li><a href={s2.href} class="block py-2 px-3 rounded hover:bg-white/5">{s2.text}</a></li>
+                              ))}
+                            </ul>
+                          </details>
+                        ) : (
+                          <a href={sub.href} class="block py-2 px-3 rounded hover:bg-white/5">{sub.text}</a>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              ) : (
+                <a href={item.href} class="block py-2 px-3 rounded hover:bg-white/5">{item.text}</a>
+              )}
+            </li>
+          ))}
         </ul>
-
         <div class="pt-4">
           <a href="/contact" class="inline-block w-full text-center px-4 py-3 bg-amber-500 rounded-md font-semibold">Get a Quote</a>
         </div>

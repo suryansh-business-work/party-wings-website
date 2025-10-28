@@ -3,30 +3,8 @@ import LocationSelector from "./react/LocationSelector";
 import CartButton from "./react/CartButton";
 import logo from "../assets/logo.svg";
 import MobileHeader from "./MobileHeader.astro";
-// dynamic nav config
-const nav = [
-  {
-    text: "Services",
-    submenu: [
-      { text: "Decoration Services", href: "/decorations" },
-      { text: "Catering Services", href: "/catering" },
-      { text: "Photographer", href: "/photographer" },
-      { text: "Other Services", href: "/other-service" },
-    ],
-  },
-  {
-    text: "Tools",
-    submenu: [
-      { text: "Guest Management", href: "/tool/guest-management" },
-      { text: "Budget Tools", href: "/budget-tool" },
-      { text: "Checklist", href: "/checklist" },
-    ],
-  },
-  { text: "Price Calulator", href: "/price-calulator" },
-  { text: "About", href: "/about" },
-  { text: "Blog", href: "/blog" },
-  { text: "Contact", href: "/contact" },
-];
+import { headerMenu } from "../assets/data/header-menu";
+const nav: any = headerMenu;
 ---
 
 <header class="sticky top-0 z-50 bg-[#2e1163]/95 backdrop-blur-sm transition-shadow duration-200">
@@ -64,7 +42,7 @@ const nav = [
       <!-- desktop nav (rendered from config) -->
       <nav class="hidden md:flex items-center gap-6 text-sm md:text-base text-white md:pl-[160px]">
         {
-          nav.map((item, i) => (
+          nav.map((item: any, i: number) => (
             item.submenu
               ? (
                 <div class="relative inline-block">
@@ -81,13 +59,33 @@ const nav = [
 
                   <div
                     id={`submenu-${i}`}
-                    class="absolute left-0 top-full mt-2 w-56 bg-white dark:bg-slate-800 border rounded-md p-3 shadow-lg z-20 invisible opacity-0 translate-y-2 transform transition-all duration-200 text-slate-700 dark:text-slate-200"
+                    class="absolute left-0 top-full mt-3 w-80 bg-white dark:bg-slate-800 border rounded-lg p-4 shadow-lg z-20 invisible opacity-0 translate-y-2 transform transition-all duration-200 text-slate-700 dark:text-slate-200"
                     role="menu"
                     aria-labelledby={`submenu-${i}`}
                   >
-                    <ul class="space-y-2 text-sm">
-                      {item.submenu.map((s) => (
-                        <li><a href={s.href} class="block hover:text-amber-300">{s.text}</a></li>
+                    { (item.icon || item.description) && (
+                      <div class="mb-2 flex items-start gap-3">
+                          {item.icon && <i class={`${item.icon} w-8 h-8 flex items-center justify-center text-amber-500 text-lg`} aria-hidden="true" />}
+                        <div>
+                          <div class="font-medium text-sm">{item.text}</div>
+                          {item.description && <div class="text-xs text-slate-500">{item.description}</div>}
+                        </div>
+                      </div>
+                    )}
+
+                    <ul class="grid gap-3 text-sm">
+                      {item.submenu.map((s: any) => (
+                        <li>
+                          <a href={s.href} class="block w-full p-2 rounded-md transition hover:bg-slate-50 dark:hover:bg-slate-700">
+                            <div class="flex items-start gap-3">
+                                {s.icon && <i class={`${s.icon} w-8 h-8 flex items-center justify-center text-amber-400 text-xl`} aria-hidden="true" />}
+                              <div class="min-w-0">
+                                <div class="font-medium text-sm text-slate-700 dark:text-slate-200">{s.text}</div>
+                                {s.description && <div class="text-xs text-slate-500">{s.description}</div>}
+                              </div>
+                            </div>
+                          </a>
+                        </li>
                       ))}
                     </ul>
                   </div>
