@@ -1,0 +1,153 @@
+---
+import Page from "../layouts/Page.astro";
+
+const posts = [
+  {
+    title: "10 Creative Decoration Ideas for Memorable Parties",
+    date: "2025-09-10",
+    displayDate: "10th Sep 2025",
+    href: "#",
+    image:
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80",
+    excerpt:
+      "Fresh decoration concepts and practical tips to transform any space — from balloon arches and themed backdrops to elegant drapery and lighting hacks that leave a lasting impression.",
+  },
+  {
+    title: "How to Choose the Right Catering Menu for Your Event",
+    date: "2025-08-05",
+    displayDate: "5th Aug 2025",
+    href: "#",
+    image:
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&q=80",
+    excerpt:
+      "Guide to building a crowd-pleasing menu: dietary considerations, portioning, presentation, and timing so your guests enjoy fresh, flavorful food every course.",
+  },
+  {
+    title: "Capturing Moments: Party Photography Tips from Pros",
+    date: "2025-07-12",
+    displayDate: "12th Jul 2025",
+    href: "#",
+    image:
+      "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=1200&q=80",
+    excerpt:
+      "Simple framing, lighting, and timing techniques to make your event photos sing — plus how to brief your photographer for the shots you really want.",
+  },
+  {
+    title: "Designing Themed Kids' Birthday Parties That Wow",
+    date: "2025-06-20",
+    displayDate: "20th Jun 2025",
+    href: "#",
+    image:
+      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80",
+    excerpt:
+      "From character themes to interactive activity stations — easy, budget-friendly ways to create immersive kid-friendly celebrations full of color and fun.",
+  },
+  {
+    title: "Ordering the Perfect Celebration Cake: Flavors & Tips",
+    date: "2025-05-15",
+    displayDate: "15th May 2025",
+    href: "#",
+    image:
+      "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80",
+    excerpt:
+      "Choosing size, flavor, and decoration: a practical checklist to order a cake that looks stunning and serves every guest — plus storage and transport tips.",
+  },
+  {
+    title: "Lighting & Sound: Transforming Your Venue After Dark",
+    date: "2025-04-10",
+    displayDate: "10th Apr 2025",
+    href: "#",
+    image:
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80",
+    excerpt:
+      "How layered lighting and quality audio change atmosphere, guide guest flow, and highlight key moments — recommendations for budgets large and small.",
+  },
+  {
+    title: "Wedding Decoration Trends: Elegant & Affordable Ideas",
+    date: "2025-03-03",
+    displayDate: "3rd Mar 2025",
+    href: "#",
+    image:
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80",
+    excerpt:
+      "Top styling ideas for modern weddings: sustainable florals, minimalist arches, mood lighting, and focal installations that photograph beautifully.",
+  },
+  {
+    title: "Corporate Events: Seamless Planning & Execution",
+    date: "2025-02-01",
+    displayDate: "1st Feb 2025",
+    href: "#",
+    image:
+      "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=1200&q=80",
+    excerpt:
+      "Checklist for professional gatherings: venue layout, AV setup, catering flow, branding touchpoints, and timeline management for on-time success.",
+  },
+  {
+    title: "Outdoor Marquee Setup: Weatherproof Party Planning",
+    date: "2025-01-10",
+    displayDate: "10th Jan 2025",
+    href: "#",
+    image:
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80",
+    excerpt:
+      "Practical advice for marquee events — site prep, flooring, heating/cooling options, and contingency plans to keep your outdoor celebration comfortable and safe.",
+  },
+];
+
+---
+
+<Page
+  title="Blog | Party Wings"
+  description="Articles and tips from Party Wings — decoration, catering, photography, cakes and event planning."
+  pageUrl="/blog"
+>
+  <main
+    class="bg-gradient-to-b from-indigo-50 to-white min-h-screen pt-20 pb-12 px-4"
+  >
+    <section class="max-w-6xl mx-auto">
+      <h1 class="text-3xl font-bold text-gray-900 mb-8 text-center">Blog</h1>
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {
+          posts.map((post) => (
+            <article class="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-xs flex flex-col h-full">
+              <img
+                alt=""
+                src={post.image}
+                class="w-full object-cover"
+                style="height:250px;"
+              />
+              <div class="p-4 sm:p-6 flex flex-col flex-1">
+                <a href={post.href}>
+                  <h3 class="text-lg font-medium text-gray-900">
+                    {post.title}
+                  </h3>
+                </a>
+                <time
+                  datetime={post.date}
+                  class="block text-xs text-gray-400 mt-1"
+                >
+                  {post.displayDate}
+                </time>
+                <p class="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
+                  {post.excerpt}
+                </p>
+                <a
+                  href={post.href}
+                  class="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600"
+                >
+                  Find out more
+                  <span
+                    aria-hidden="true"
+                    class="block transition-all group-hover:ms-0.5 rtl:rotate-180"
+                  >
+                    &rarr;
+                  </span>
+                </a>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+</Page>
