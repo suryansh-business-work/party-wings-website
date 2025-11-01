@@ -1,0 +1,143 @@
+---
+import DynamicHorizontalTab from "../../components/dynamic-components/DynamicHorizontalTab.astro";
+import Page from "../../layouts/Page.astro";
+import CareerForm from "../../components/forms/ContactForm.astro";
+import DynamicSliderImageStack from "../../components/dynamic-components/DynamicSliderImageStack.astro";
+import OpenPositions from "./OpenPositions.astro";
+
+const jobs = [
+  {
+    title: "AI Engineer",
+    location: "Remote / India",
+    type: "Full Time",
+    description:
+      "Design, build, and deploy AI models and automation solutions for enterprise clients.",
+    requirements: [
+      "2+ years experience in AI/ML",
+      "Proficiency in Python or JavaScript",
+      "Experience with cloud platforms (AWS, Azure, GCP)",
+    ],
+  },
+  {
+    title: "Frontend Developer",
+    location: "Remote / India",
+    type: "Full Time",
+    description: "Develop modern, responsive UIs for our SaaS and AI products.",
+    requirements: [
+      "2+ years experience with React or Vue",
+      "Strong CSS/HTML skills",
+      "Experience with REST APIs",
+    ],
+  },
+  {
+    title: "Product Manager (AI SaaS)",
+    location: "Remote / India",
+    type: "Full Time",
+    description:
+      "Lead product strategy and execution for our AI SaaS platforms.",
+    requirements: [
+      "3+ years in product management",
+      "Experience with SaaS products",
+      "Strong communication skills",
+    ],
+  },
+];
+---
+
+<Page
+  metaTitle="Careers at Party Wings | AI, SaaS & Automation Jobs"
+  metaDescription="Explore open positions at Party Wings. Join our team of AI, SaaS, and automation experts. Apply for remote jobs in engineering, product, and more."
+  metaKeywords="careers, jobs, AI jobs, SaaS jobs, automation, remote jobs, Party Wings, hiring"
+  metaImage="https://images.pexels.com/photos/776615/pexels-photo-776615.jpeg"
+>
+  <DynamicSliderImageStack
+    images={[
+      {
+        src: "https://images.pexels.com/photos/8837809/pexels-photo-8837809.jpeg",
+        alt: "Teamwork at Party Wings",
+      },
+      {
+        src: "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg",
+        alt: "Remote Collaboration",
+      },
+      {
+        src: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg",
+        alt: "Innovation in AI",
+      },
+      {
+        src: "https://images.pexels.com/photos/776615/pexels-photo-776615.jpeg",
+        alt: "Growth and Learning",
+      },
+      {
+        src: "https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg",
+        alt: "Diverse Team",
+      },
+      {
+        src: "https://images.pexels.com/photos/2422293/pexels-photo-2422293.jpeg",
+        alt: "Creative Workspace",
+      },
+    ]}
+  />
+  <OpenPositions />
+  <CareerForm />
+
+  <div class="text-center mt-12">
+    <p class="text-gray-600">
+      Don't see a role that fits? Email your resume to <a
+        href="mailto:careers@Party Wings.life"
+        class="text-[#0071e3] underline">careers@Party Wings.life</a
+      >
+    </p>
+  </div>
+
+  <DynamicHorizontalTab
+    heading="Why Join Party Wings?"
+    tabs={[
+      {
+        label: "Why Party Wings",
+        description: "Our mission and vision",
+        content: `<div>
+                <h3 class="text-xl font-bold mb-2 text-[#0071e3]">Purpose-Driven Innovation</h3>
+                <p>
+                  At Party Wings, we are passionate about building AI and automation solutions that empower businesses to thrive in a digital world. Our mission is to make advanced technology accessible, ethical, and impactful for organizations of all sizes.
+                </p>
+                <ul class="list-disc pl-5 mt-3 text-gray-700">
+                  <li>Cutting-edge projects in AI, SaaS, and automation</li>
+                  <li>Direct impact on real-world business challenges</li>
+                  <li>Growth opportunities in a fast-scaling company</li>
+                </ul>
+              </div>`,
+      },
+      {
+        label: "Our Work Culture",
+        description: "How we work together",
+        content: `<div>
+                <h3 class="text-xl font-bold mb-2 text-[#0071e3]">Collaborative & Inclusive</h3>
+                <p>
+                  We foster a culture of openness, respect, and continuous learning. Our remote-first team values flexibility, transparency, and work-life balance. We celebrate diversity and believe the best ideas come from empowered, happy people.
+                </p>
+                <ul class="list-disc pl-5 mt-3 text-gray-700">
+                  <li>Remote-friendly and flexible schedules</li>
+                  <li>Regular team events and knowledge sharing</li>
+                  <li>Support for personal and professional growth</li>
+                </ul>
+              </div>`,
+      },
+      {
+        label: "Benefits",
+        description: "Perks & advantages",
+        content: `<div>
+                <h3 class="text-xl font-bold mb-2 text-[#0071e3]">We Invest in You</h3>
+                <p>
+                  We offer competitive compensation, health benefits, learning budgets, and the tools you need to do your best work. Your well-being and success are our priorities.
+                </p>
+                <ul class="list-disc pl-5 mt-3 text-gray-700">
+                  <li>Competitive salary & performance bonuses</li>
+                  <li>Health insurance & wellness programs</li>
+                  <li>Learning & development support</li>
+                </ul>
+              </div>`,
+      },
+    ]}
+  />
+</Page>
