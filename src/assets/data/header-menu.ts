@@ -2,7 +2,7 @@ export const headerMenu = [
   {
     text: "Services",
     submenu: [
-      { text: "Decoration Services", href: "/decorations", description: "Balloons, florals and stage setups", icon: "fas fa-palette" },
+      { text: "Decoration Services", href: "/decorations-services", description: "Balloons, florals and stage setups", icon: "fas fa-palette" },
       { text: "Catering Services", href: "/catering", description: "Buffet and plated menus for all sizes", icon: "fas fa-utensils" },
       { text: "Photographer", href: "/photographer", description: "Event & candid photography packages", icon: "fas fa-camera" },
       { text: "Other Services", href: "/other-service", description: "Makeup, MC, planning and more", icon: "fas fa-ellipsis-h" },

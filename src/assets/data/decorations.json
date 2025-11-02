@@ -1,0 +1,64 @@
+{
+  "categories": [
+    {
+      "id": "personal",
+      "title": "Personal & Celebration Decorations",
+      "items": [
+        {
+          "id": "personal-1",
+          "title": "Birthday Party Decoration (kids, adults, theme-based)",
+          "price": "Starting from ₹1,500",
+          "description": "Theme-based birthday decorations with balloons, backdrops, props and table setups. Suitable for homes and small venues.",
+          "images": ["/assets/balloon-pack.svg","/assets/flower-bouquet.svg","/assets/return-gifts.svg"]
+        },
+        {
+          "id": "personal-2",
+          "title": "Anniversary Decoration",
+          "price": "Starting from ₹2,500",
+          "description": "Romantic anniversary setups with floral arrangements, lighting and personalized props.",
+          "images": ["/assets/flower-bouquet.svg","/assets/return-gifts.svg"]
+        },
+        {
+          "id": "personal-3",
+          "title": "Surprise Room Decoration",
+          "price": "Starting from ₹1,200",
+          "description": "Quick surprise room decorators for home celebrations with balloons and fairy lights.",
+          "images": ["/assets/balloon-pack.svg","/assets/return-gifts.svg"]
+        }
+      ]
+    },
+    {
+      "id": "wedding",
+      "title": "Wedding & Engagement Decorations",
+      "items": [
+        {
+          "id": "wedding-1",
+          "title": "Wedding Mandap Decoration",
+          "price": "Starting from ₹15,000",
+          "description": "Traditional or contemporary mandap decorations using florals, drapes and lighting, tailored to the theme.",
+          "images": ["/assets/flower-bouquet.svg","/assets/return-gifts.svg","/assets/balloon-pack.svg"]
+        },
+        {
+          "id": "wedding-2",
+          "title": "Sangeet Stage & Dance Floor Decoration",
+          "price": "Starting from ₹10,000",
+          "description": "Stage, lighting and dance floor dressing for energetic sangeet nights.",
+          "images": ["/assets/entry-badges.svg","/assets/flower-bouquet.svg"]
+        }
+      ]
+    },
+    {
+      "id": "balloon",
+      "title": "Balloon & Theme Decorations",
+      "items": [
+        {
+          "id": "balloon-1",
+          "title": "Balloon Decoration (helium, LED, printed, metallic, confetti)",
+          "price": "Starting from ₹999",
+          "description": "Full range of balloon setups including arches, clusters and LED installations.",
+          "images": ["/assets/balloon-pack.svg","/assets/return-gifts.svg"]
+        }
+      ]
+    }
+  ]
+}

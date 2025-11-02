@@ -1,0 +1,294 @@
+---
+import Page from "../layouts/Page.astro";
+
+const categories = [
+  {
+    id: "personal",
+    title: "Personal & Celebration Decorations",
+    items: [
+      "Birthday Party Decoration (kids, adults, theme-based)",
+      "Anniversary Decoration",
+      "Surprise Room Decoration",
+      "Candlelight Dinner Setup (home, terrace, or restaurant)",
+      "Baby Shower / Naming Ceremony Decoration",
+      "Cradle Ceremony Decoration",
+      "First Birthday Decoration",
+      "Gender Reveal Decoration",
+      "Housewarming (Griha Pravesh) Decoration",
+      "Retirement Party Decoration",
+      "Welcome Home Decoration (newborn, newlyweds, etc.)",
+    ],
+  },
+  {
+    id: "wedding",
+    title: "Wedding & Engagement Decorations",
+    items: [
+      "Engagement Ceremony Decoration",
+      "Haldi & Mehendi Function Setup",
+      "Sangeet Stage & Dance Floor Decoration",
+      "Wedding Mandap Decoration",
+      "Wedding Stage & Backdrop Design",
+      "Baraat Car Decoration",
+      "Reception Decoration",
+      "Entry Gate & Pathway Floral Setup",
+      "Wedding Photo Booth Setup",
+      "Destination Wedding Theme Setup",
+    ],
+  },
+  {
+    id: "balloon",
+    title: "Balloon & Theme Decorations",
+    items: [
+      "Balloon Decoration (helium, LED, printed, metallic, confetti)",
+      "Cartoon / Character-Themed Decorations (Mickey, Barbie, etc.)",
+      "Customized Theme Parties (Jungle, Princess, Superhero, etc.)",
+      "LED Light & Neon Theme Decoration",
+      "Glow in the Dark Party Setup",
+      "3D Balloon Art Installations",
+    ],
+  },
+  {
+    id: "home",
+    title: "Home & Outdoor Decorations",
+    items: [
+      "Home Interior Event Decoration (living room, terrace, balcony)",
+      "Terrace Party Setup",
+      "Garden / Outdoor Event Decoration",
+      "Diya & Lighting Decoration (for festivals)",
+      "Festive Home Decoration (Diwali, Holi, Christmas, Eid, Ganesh Chaturthi, Navratri, etc.)",
+      "Home Entrance Decoration with Torans & Rangoli",
+      "Floral Wall Backdrops",
+    ],
+  },
+  {
+    id: "floral",
+    title: "Floral & Traditional Decorations",
+    items: [
+      "Flower Garland & Backdrop Decoration",
+      "Stage Floral Arrangement",
+      "Mandap Flower Decoration",
+      "Car Floral Decoration",
+      "Pooja & Temple Decoration",
+      "Traditional Marigold & Banana Leaf Setup",
+      "Floral Pathways & Arches",
+    ],
+  },
+  {
+    id: "corporate",
+    title: "Corporate & Professional Events",
+    items: [
+      "Office Inauguration / Opening Ceremony Decoration",
+      "Corporate Event Stage Setup",
+      "Product Launch & Brand Promotion Decoration",
+      "Award Ceremony & Annual Function Setup",
+      "Exhibition Stall Decoration",
+      "Conference & Seminar Backdrop",
+      "Corporate Festive Decoration (Diwali, New Year, etc.)",
+      "Ribbon Cutting Ceremony Setup",
+    ],
+  },
+  {
+    id: "institutional",
+    title: "Institutional & Public Events",
+    items: [
+      "School / College Annual Day Setup",
+      "Farewell & Fresher’s Party Decoration",
+      "Independence Day / Republic Day Stage Decoration",
+      "Cultural Program & Prize Distribution Setup",
+      "Community Event & Society Function Decoration",
+    ],
+  },
+  {
+    id: "lighting",
+    title: "Lighting & Ambience Setup",
+    items: [
+      "LED Fairy Light Decoration",
+      "Outdoor Lighting (string lights, floodlights, spotlights)",
+      "Stage & DJ Lighting Setup",
+      "Laser Light Effects",
+      "Candle & Lantern Decoration",
+    ],
+  },
+  {
+    id: "addons",
+    title: "Add-On / Premium Decoration Services",
+    items: [
+      "Custom Photo Booths & Frames",
+      "LED Name Boards & Initial Letters",
+      "Welcome Boards & Signage",
+      "Themed Props & Cutouts",
+      "Draping & Fabric Decoration",
+      "Balloon Arches & Entrances",
+      "Table Centerpieces & Backdrops",
+      "Personalized Gift Corners / Return Gift Setup",
+    ],
+  },
+];
+---
+
+<Page
+  title="Decoration Services"
+  description="Party Wings - Decoration services across India"
+>
+  <section class="relative bg-gradient-to-b from-[#f8fafc] to-white py-12">
+    <div class="max-w-6xl mx-auto px-4">
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+        <!-- Left: categories & service list (narrow column) -->
+        <aside class="col-span-1 bg-white rounded-lg shadow p-4 md:p-6 sticky top-24 h-[70vh] overflow-auto">
+          <h3 class="text-lg font-semibold mb-3">Services</h3>
+          <div id="left-list">
+            <!-- Search & category controls (moved here) -->
+            <div class="mb-4">
+              <div class="relative mb-3">
+                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"><i class="fa-solid fa-magnifying-glass"></i></span>
+                <input id="service-search" type="search" placeholder="Search services..." class="input-with-search-icon w-full pl-10 pr-3 py-2 rounded border border-gray-200 focus:ring-2 focus:ring-[#0071e3] outline-none" />
+              </div>
+              <div class="flex gap-2">
+                <select id="category-filter" class="flex-1 px-2 py-2 rounded border border-gray-200 focus:ring-2 focus:ring-[#0071e3] outline-none">
+                  <option value="">All Categories</option>
+                  {categories.map((cat) => (
+                    <option value={cat.id}>{cat.title}</option>
+                  ))}
+                </select>
+                <button id="clear-filters" class="px-3 py-2 bg-gray-100 rounded border border-gray-200">Clear</button>
+              </div>
+            </div>
+            <!-- rendered server-side for initial load -->
+            {categories.map((cat, catIdx) => (
+              <div class="mb-4" data-cat-id={cat.id}>
+                <h4 class="text-sm font-semibold text-gray-700 mb-2">{cat.title}</h4>
+                <ul class="space-y-1">
+                  {cat.items.map((item, itemIdx) => (
+                    <li>
+                      <button
+                        class="w-full text-left service-link text-gray-700 hover:text-[#0071e3] px-2 py-1 rounded"
+                        data-cat-index={catIdx}
+                        data-item-index={itemIdx}
+                        data-service-title={item.toLowerCase()}
+                      >
+                        {item}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </aside>
+
+        <!-- Right: details and gallery (wide column) -->
+        <div class="col-span-2 bg-white rounded-lg shadow p-6 md:p-8" id="detail-panel">
+          <!-- default content populated server-side (first category/item) -->
+          <div id="detail-content">
+            <h2 id="detail-title" class="text-2xl font-bold text-gray-900 mb-2">{categories[0].items[0]}</h2>
+            <p id="detail-category" class="text-sm text-gray-500 mb-4">{categories[0].title}</p>
+            <div class="flex items-center gap-4 mb-6">
+              <div class="text-3xl font-extrabold text-gray-900" id="detail-price">Starting from ₹1,500</div>
+              <a id="detail-enquire" href={`mailto:hello@party-wings.in?subject=Enquiry%20for%20${encodeURIComponent(categories[0].items[0])}`} class="ml-auto inline-block bg-[#0071e3] text-white px-4 py-2 rounded">Enquire</a>
+            </div>
+
+            <div id="detail-gallery" class="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <!-- placeholder images -->
+              <img src="/assets/return-gifts.svg" alt="photo" class="w-full h-28 object-cover rounded" onerror="this.src='/favicon.svg'" />
+              <img src="/assets/flower-bouquet.svg" alt="photo" class="w-full h-28 object-cover rounded" onerror="this.src='/favicon.svg'" />
+              <img src="/assets/entry-badges.svg" alt="photo" class="w-full h-28 object-cover rounded" onerror="this.src='/favicon.svg'" />
+              <img src="/assets/balloon-pack.svg" alt="photo" class="w-full h-28 object-cover rounded" onerror="this.src='/favicon.svg'" />
+            </div>
+
+            <div class="mt-6 text-gray-700" id="detail-desc">
+              <p>Lorem ipsum description about the service. Click a service on the left to see price, images and details here.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Page>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById('service-search');
+    const categoryFilter = document.getElementById('category-filter');
+    const clearBtn = document.getElementById('clear-filters');
+    const leftList = document.getElementById('left-list');
+    const detailTitle = document.getElementById('detail-title');
+    const detailCategory = document.getElementById('detail-category');
+    const detailPrice = document.getElementById('detail-price');
+    const detailDesc = document.getElementById('detail-desc');
+    const detailGallery = document.getElementById('detail-gallery');
+    const detailEnquire = document.getElementById('detail-enquire');
+
+    // simple dataset for price ranges and sample galleries (could be replaced with API)
+    const SAMPLE = {
+      priceRanges: ['Starting from ₹1,500', 'Starting from ₹2,500', 'Starting from ₹5,000', 'Custom pricing'],
+      imgs: ['/assets/flower-bouquet.svg','/assets/return-gifts.svg','/assets/entry-badges.svg','/assets/balloon-pack.svg']
+    };
+
+    function attachLeftHandlers() {
+      leftList.querySelectorAll('.service-link').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const catIndex = Number(btn.getAttribute('data-cat-index'));
+          const itemIndex = Number(btn.getAttribute('data-item-index'));
+          const cat = categories[catIndex];
+          const item = cat.items[itemIndex];
+          showDetail(cat.title, item);
+          // highlight active
+          leftList.querySelectorAll('.service-link').forEach(b => b.classList.remove('bg-gray-100'));
+          btn.classList.add('bg-gray-100');
+        });
+      });
+    }
+
+    function showDetail(catTitle, item) {
+      detailTitle.textContent = item;
+      detailCategory.textContent = catTitle;
+      detailPrice.textContent = SAMPLE.priceRanges[Math.floor(Math.random()*SAMPLE.priceRanges.length)];
+      detailDesc.innerHTML = `<p>Detailed description for <strong>${item}</strong>. We provide customised setups, quality props and timely setup & teardown. Contact us for exact quotes and availability in your city.</p>`;
+      detailEnquire.href = `mailto:hello@party-wings.in?subject=Enquiry%20for%20${encodeURIComponent(item)}`;
+
+      // populate gallery
+      detailGallery.innerHTML = '';
+      SAMPLE.imgs.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = item;
+        img.className = 'w-full h-28 object-cover rounded';
+        img.onerror = function() { this.src = '/favicon.svg'; };
+        detailGallery.appendChild(img);
+      });
+    }
+
+    function filterLeft() {
+      const q = searchInput.value.trim().toLowerCase();
+      const cat = categoryFilter.value;
+      leftList.querySelectorAll('[data-cat-id]').forEach(section => {
+        const catId = section.getAttribute('data-cat-id');
+        let anyVisible = false;
+        section.querySelectorAll('.service-link').forEach(btn => {
+          const title = btn.getAttribute('data-service-title');
+          const matchesSearch = !q || title.includes(q);
+          const matchesCat = !cat || catId === cat;
+          btn.style.display = (matchesSearch && matchesCat) ? '' : 'none';
+          if (btn.style.display !== 'none') anyVisible = true;
+        });
+        section.style.display = anyVisible ? '' : 'none';
+      });
+    }
+
+    // initial attach + default detail
+    attachLeftHandlers();
+    // show first item by default
+    const firstBtn = leftList.querySelector('.service-link');
+    if (firstBtn) firstBtn.click();
+
+    searchInput.addEventListener('input', filterLeft);
+    categoryFilter.addEventListener('change', filterLeft);
+    clearBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      searchInput.value = '';
+      categoryFilter.value = '';
+      filterLeft();
+    });
+  });
+</script>
