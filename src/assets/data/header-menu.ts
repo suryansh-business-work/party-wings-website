@@ -23,6 +23,7 @@ export const headerMenu = [
     ],
   },
   { text: "Price Calulator", href: "/price-calulator", description: "Quick price estimates", icon: "fas fa-calculator" },
+  { text: "Store", href: "/store", description: "Get in touch with us", icon: "fas fa-envelope" },
   { text: "About", href: "/about", description: "Learn about Party Wings", icon: "fas fa-info-circle" },
   { text: "Blog", href: "/blog", description: "Tips, stories and ideas", icon: "fas fa-blog" },
   { text: "Contact", href: "/contact", description: "Get in touch with us", icon: "fas fa-envelope" },

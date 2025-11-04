@@ -1,6 +1,7 @@
 ---
 import Page from "../layouts/Page.astro";
-import VendorRegistration from "../components/react/VendorRegistration";
+// import VendorRegistration from "../components/react/VendorRegistration";
+import VendorRegistrationForm from "../components/forms/vendor-registration-forms/vendor-registration-form";
 ---
 
 <Page
@@ -9,9 +10,11 @@ import VendorRegistration from "../components/react/VendorRegistration";
   pageUrl="/vender-registration"
 >
   <main class="min-h-screen bg-gradient-to-b from-amber-50 to-white py-12 px-4">
-    <section class="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center">
-      <div>
-        <div class="bg-white rounded-2xl shadow-md p-6">
+    <section class="container mx-auto">
+      <div class="container">
+        <div class="row justify-center">
+          <div class="col-12 col-md-10 col-lg-8 mx-auto">
+            <div class="bg-white rounded-2xl shadow-md p-6">
           <div class="flex items-center gap-3 mb-4">
             <div>
               <h1 class="text-xl font-bold">
@@ -22,9 +25,7 @@ import VendorRegistration from "../components/react/VendorRegistration";
               </p>
             </div>
           </div>
-
-          <VendorRegistration client:load />
-
+          <VendorRegistrationForm client:load />
           <div class="mt-4 text-xs text-gray-500">
             By registering you agree to our <a
               href="/policies/terms"
@@ -34,6 +35,8 @@ import VendorRegistration from "../components/react/VendorRegistration";
               class="text-amber-600 hover:underline">Privacy Policy</a
             >.
           </div>
+          </div>
+        </div>
         </div>
 
         <footer class="mt-4 text-sm text-gray-600">
@@ -43,6 +46,7 @@ import VendorRegistration from "../components/react/VendorRegistration";
             <a href="/contact" class="hover:underline">Contact Support</a>
           </div>
         </footer>
+      
       </div>
     </section>
   </main>

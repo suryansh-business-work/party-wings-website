@@ -1,0 +1,30 @@
+---
+import VendorLogin from "../components/forms/customer/customer-login";
+import Page from "../layouts/Page.astro";
+---
+
+<Page
+  title="Vendor Login | Party Wings"
+  description="Vendor login - access your vendor dashboard using phone OTP."
+  pageUrl="/vender-login"
+>
+  <main class="min-h-screen bg-gradient-to-b from-amber-50 to-white py-12 px-4">
+    <section class="container mx-auto">
+      <div class="container">
+        <div class="row justify-center">
+          <div class="col-12 col-md-10 col-lg-8 mx-auto">
+            <div class="bg-white rounded-2xl shadow-md p-6">
+          <div class="flex items-center gap-3 mb-4">
+            <div>
+              <h1 class="text-xl font-bold">Vendor Login</h1>
+              <p class="text-sm text-gray-500">Login with your registered business phone using OTP.</p>
+            </div>
+          </div>
+          <VendorLogin client:load />
+          </div>
+        </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Page>

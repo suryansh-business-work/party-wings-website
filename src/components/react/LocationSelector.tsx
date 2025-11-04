@@ -32,7 +32,7 @@ export default function LocationSelector() {
       </button>
       {open ? (
         <div className="absolute right-0 mt-2 w-64 bg-white  border rounded-md p-3 shadow-lg z-30">
-          <label className="block text-xs font-semibold">Choose your city</label>
+          <label className="text-black  block text-xs font-semibold">Choose your city</label>
           <select defaultValue={city} className="mt-2 block w-full text-black rounded-md border px-2 py-2 text-sm width-[240px]" onChange={(e) => setCity(e.currentTarget.value)}>
             <option value="">-- Select city --</option>
             <option value="Ghaziabad - Raj Nagar Extention">Ghaziabad - Raj Nagar Extention</option>

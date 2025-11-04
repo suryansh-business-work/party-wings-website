@@ -41,7 +41,7 @@ const items = getBreadcrumbItems(url);
             </svg>
           )}
           {idx < items.length - 1 ? (
-            <a href={item.href} class="block transition-colors hover:text-gray-900">{item.name}</a>
+            <a href={item.href} class="text-black block transition-colors hover:text-gray-900">{item.name}</a>
           ) : (
             <span class="block font-semibold text-indigo-700" aria-current="page">{item.name}</span>
           )}

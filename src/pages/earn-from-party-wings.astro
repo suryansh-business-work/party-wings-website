@@ -17,75 +17,80 @@ import Page from "../layouts/Page.astro";
         </p>
       </header>
 
-      <div class="grid gap-6 md:grid-cols-3">
-        <article
-          class="border border-gray-100 rounded-lg p-6 hover:shadow transition"
-        >
-          <div class="flex items-center gap-4 mb-3">
-            <div
-              class="inline-flex items-center justify-center w-12 h-12 bg-rose-50 rounded-full text-rose-600 font-semibold"
-            >
-              1
+      <div class="container">
+        <div class="row g-4">
+          <!-- Card 1: Potential Sales Leads -->
+          <div class="col-12 col-md-6">
+            <div class="rounded-lg overflow-hidden shadow-lg" style="height:100%;">
+              <div
+                style="background-image:url('https://images.pexels.com/photos/2182981/pexels-photo-2182981.jpeg'); background-size: cover; background-position:center; height:260px;"
+                aria-hidden="true"
+              ></div>
+              <div class="p-4 bg-white">
+                <div class="d-flex align-items-center gap-3 mb-2">
+                  <div class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width:44px;height:44px;background:#fff3f2;color:#b91c1c;font-weight:700;">1</div>
+                  <h3 class="h5 mb-0">Potential Sales Leads</h3>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">Share potential event leads (venues, clients, or businesses) with Party Wings. Every qualified lead you send will be reviewed by our sales team — if it converts to a booking, you earn a reward.</p>
+                <a href="/contact" class="text-rose-600 fw-semibold">Refer a lead &rarr;</a>
+              </div>
             </div>
-            <h3 class="text-lg font-semibold">Potential Sales Leads</h3>
           </div>
-          <p class="text-sm text-gray-600 mb-4">
-            Share potential event leads (venues, clients, or businesses) with
-            Party Wings. Every qualified lead you send will be reviewed by our
-            sales team — if it converts to a booking, you earn a reward.
-          </p>
-          <a
-            href="/contact"
-            class="inline-block text-rose-600 font-medium hover:underline"
-            >Refer a lead &rarr;</a
-          >
-        </article>
 
-        <article
-          class="border border-gray-100 rounded-lg p-6 hover:shadow transition"
-        >
-          <div class="flex items-center gap-4 mb-3">
-            <div
-              class="inline-flex items-center justify-center w-12 h-12 bg-rose-50 rounded-full text-rose-600 font-semibold"
-            >
-              2
+          <!-- Card 2: Earn From Store -->
+          <div class="col-12 col-md-6">
+            <div class="rounded-lg overflow-hidden shadow-lg" style="height:100%;">
+              <div
+                style="background-image:url('https://images.pexels.com/photos/942320/pexels-photo-942320.jpeg'); background-size: cover; background-position:center; height:260px;"
+                aria-hidden="true"
+              ></div>
+              <div class="p-4 bg-white">
+                <div class="d-flex align-items-center gap-3 mb-2">
+                  <div class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width:44px;height:44px;background:#fff3f2;color:#b91c1c;font-weight:700;">2</div>
+                  <h3 class="h5 mb-0">Earn From Store — List your items</h3>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">Sell party supplies, decorations, or rental items on Party Wings. List your products in our store to reach customers planning events and earn from each sale or rental.</p>
+                <a href="/store" class="text-rose-600 fw-semibold">List your items &rarr;</a>
+              </div>
             </div>
-            <h3 class="text-lg font-semibold">Successful Referrals</h3>
           </div>
-          <p class="text-sm text-gray-600 mb-4">
-            Refer our services to friends, family, or clients. When your
-            referral results in a confirmed booking, you'll receive a referral
-            bonus or credit according to our referral policy.
-          </p>
-          <a
-            href="/contact"
-            class="inline-block text-rose-600 font-medium hover:underline"
-            >Make a referral &rarr;</a
-          >
-        </article>
 
-        <article
-          class="border border-gray-100 rounded-lg p-6 hover:shadow transition"
-        >
-          <div class="flex items-center gap-4 mb-3">
-            <div
-              class="inline-flex items-center justify-center w-12 h-12 bg-rose-50 rounded-full text-rose-600 font-semibold"
-            >
-              3
+          <!-- Card 3: Successful Referrals -->
+          <div class="col-12 col-md-6">
+            <div class="rounded-lg overflow-hidden shadow-lg" style="height:100%;">
+              <div
+                style="background-image:url('https://images.pexels.com/photos/7552374/pexels-photo-7552374.jpeg'); background-size: cover; background-position:center; height:260px;"
+                aria-hidden="true"
+              ></div>
+              <div class="p-4 bg-white">
+                <div class="d-flex align-items-center gap-3 mb-2">
+                  <div class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width:44px;height:44px;background:#fff3f2;color:#b91c1c;font-weight:700;">3</div>
+                  <h3 class="h5 mb-0">Successful Referrals</h3>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">Refer our services to friends, family, or clients. When your referral results in a confirmed booking, you'll receive a referral bonus or credit according to our referral policy.</p>
+                <a href="/contact" class="text-rose-600 fw-semibold">Make a referral &rarr;</a>
+              </div>
             </div>
-            <h3 class="text-lg font-semibold">Register as a Vendor</h3>
           </div>
-          <p class="text-sm text-gray-600 mb-4">
-            If you provide services (catering, decor, photography, makeup, etc.)
-            register as a Party Wings vendor. Get access to job leads, vendor
-            dashboards, and priority listings for events that match your skills.
-          </p>
-          <a
-            href="/vender-registration"
-            class="inline-block text-rose-600 font-medium hover:underline"
-            >Register as a vendor &rarr;</a
-          >
-        </article>
+
+          <!-- Card 4: Register as a Vendor -->
+          <div class="col-12 col-md-6">
+            <div class="rounded-lg overflow-hidden shadow-lg" style="height:100%;">
+              <div
+                style="background-image:url('https://images.pexels.com/photos/34535760/pexels-photo-34535760.jpeg'); background-size: cover; background-position:center; height:260px;"
+                aria-hidden="true"
+              ></div>
+              <div class="p-4 bg-white">
+                <div class="d-flex align-items-center gap-3 mb-2">
+                  <div class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width:44px;height:44px;background:#fff3f2;color:#b91c1c;font-weight:700;">4</div>
+                  <h3 class="h5 mb-0">Register as a Vendor</h3>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">If you provide services (catering, decor, photography, makeup, etc.) register as a Party Wings vendor. Get access to job leads, vendor dashboards, and priority listings for events that match your skills.</p>
+                <a href="/vender-registration" class="text-rose-600 fw-semibold">Register as a vendor &rarr;</a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <section class="mt-8 bg-rose-50 border border-rose-100 rounded-lg p-6">
