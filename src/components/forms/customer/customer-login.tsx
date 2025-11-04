@@ -97,7 +97,7 @@ const CustomerLogin: React.FC<Props> = ({ onLogin }) => {
     <Box sx={{ maxWidth: 480, p: 2 }}>
       <form onSubmit={formik.handleSubmit} noValidate>
         <Stack spacing={2}>
-          <Typography variant="h6">Vendor Login</Typography>
+          <Typography variant="h6">Customer Login</Typography>
 
           <TextField
             id="phone"
