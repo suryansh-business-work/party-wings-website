@@ -7,10 +7,14 @@ import { headerMenu } from "../assets/data/header-menu";
 const nav: any = headerMenu;
 ---
 
-<header class="sticky top-0 z-50 bg-[#2e1163]/95 backdrop-blur-sm transition-shadow duration-200">
+<header
+  class="sticky top-0 z-50 bg-[#2e1163]/95 backdrop-blur-sm transition-shadow duration-200"
+>
   <!-- top contact strip -->
   <div class="w-full bg-[#230a44] text-white text-xs">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-1 flex items-center justify-between">
+    <div
+      class="container mx-auto px-4 sm:px-6 lg:px-8 py-1 flex items-center justify-between"
+    >
       <div class="flex items-center gap-2 md:pl-[140px]">
         <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
         <div class="hidden md:inline-flex">
@@ -27,89 +31,173 @@ const nav: any = headerMenu;
           <i class="fas fa-phone" aria-hidden="true"></i>
           <span class="hidden sm:inline">+91-000000000</span>
         </a> -->
-        <a href="/earn-from-party-wings" class="text-white flex items-center gap-2 hover:text-amber-300">
+        <a
+          href="/earn-from-party-wings"
+          class="text-white flex items-center gap-2 hover:text-amber-300"
+        >
           <i class="fa-solid fa-money-check-dollar"></i>
           <span class="hidden sm:inline">Earn from Party Wings</span>
         </a>
-        <a href="/vender-registration" class="text-white  flex items-center gap-2 hover:text-amber-300">
+        <a
+          href="/vender-registration"
+          class="text-white flex items-center gap-2 hover:text-amber-300"
+        >
           <i class="fa-solid fa-store" aria-hidden="true"></i>
           <span class="hidden sm:inline">Register yourself as Vendor</span>
         </a>
-         <a href="/customer-login" class="text-white  flex items-center gap-2 hover:text-amber-300">
+        <!-- Customer login / user dropdown placeholder -->
+        <a
+          id="customer-login-link"
+          href="/customer-login"
+          class="text-white flex items-center gap-2 hover:text-amber-300"
+        >
           <i class="fa-solid fa-user" aria-hidden="true"></i>
           <span class="hidden sm:inline">Customer Login</span>
         </a>
+
+        <div id="header-user" class="hidden relative">
+          <button
+            id="header-user-button"
+            class="text-white flex items-center gap-2 hover:text-amber-300 focus:outline-none"
+          >
+            <div
+              id="header-user-avatar"
+              class="w-8 h-8 rounded-full bg-amber-400 text-white flex items-center justify-center text-sm font-semibold"
+            >
+            </div>
+            <span id="header-user-name" class="hidden sm:inline"></span>
+            <i class="fa-solid fa-caret-down ml-1"></i>
+          </button>
+
+          <div
+            id="header-user-menu"
+            class="absolute right-0 mt-2 w-48 bg-white text-slate-700 rounded-md shadow-lg border hidden z-50"
+          >
+            <a href="/profile" class="block px-4 py-2 hover:bg-slate-50"
+              >Profile</a
+            >
+            <a href="/orders" class="block px-4 py-2 hover:bg-slate-50"
+              >Orders</a
+            >
+            <a
+              href="/vender-dashboard"
+              class="block px-4 py-2 hover:bg-slate-50">Vendor Dashboard</a
+            >
+            <div class="border-t"></div>
+            <button
+              id="header-logout"
+              class="w-full text-left px-4 py-2 hover:bg-slate-50"
+              >Logout</button
+            >
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8 header-inner py-4 flex items-center justify-between transition-[padding] duration-200">
+  <div
+    class="container mx-auto px-4 sm:px-6 lg:px-8 header-inner py-4 flex items-center justify-between transition-[padding] duration-200"
+  >
     <div class="flex items-center gap-4">
-      <div class="header-logo absolute left-4 w-[96px] h-[96px] md:w-[140px] md:h-[140px] bg-[#2e1163] top-0 p-[6px] z-50 transform transition-transform duration-200">
+      <div
+        class="header-logo absolute left-4 w-[96px] h-[96px] md:w-[140px] md:h-[140px] bg-[#2e1163] top-0 p-[6px] z-50 transform transition-transform duration-200"
+      >
         <a href="/" class="flex items-center justify-center h-full w-full">
-          <img src={logo.src} alt="Party Wings" class="w-full h-full object-contain" />
+          <img
+            src={logo.src}
+            alt="Party Wings"
+            class="w-full h-full object-contain"
+          />
         </a>
       </div>
 
       <!-- desktop nav (rendered from config) -->
-      <nav class="hidden md:flex items-center gap-6 text-sm md:text-base text-white md:pl-[160px]">
+      <nav
+        class="hidden md:flex items-center gap-6 text-sm md:text-base text-white md:pl-[160px]"
+      >
         {
-          nav.map((item: any, i: number) => (
-            item.submenu
-              ? (
-                <div class="relative inline-block">
-                  <button
-                    data-submenu-toggle
-                    data-index={i}
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    aria-controls={`submenu-${i}`}
-                    class="hover:text-amber-500 focus:outline-none transition-colors inline-flex items-center"
-                  >
-                    {item.text}
-                    <i class="fa-solid fa-sort-down ml-2 text-sm leading-none self-center align-middle" aria-hidden="true"></i>
-                  </button>
+          nav.map((item: any, i: number) =>
+            item.submenu ? (
+              <div class="relative inline-block">
+                <button
+                  data-submenu-toggle
+                  data-index={i}
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-controls={`submenu-${i}`}
+                  class="hover:text-amber-500 focus:outline-none transition-colors inline-flex items-center"
+                >
+                  {item.text}
+                  <i
+                    class="fa-solid fa-sort-down ml-2 text-sm leading-none self-center align-middle"
+                    aria-hidden="true"
+                  />
+                </button>
 
-                  <div
-                    id={`submenu-${i}`}
-                    class="absolute left-0 top-full mt-3 w-80 bg-white dark:bg-slate-800 border rounded-lg p-4 shadow-lg z-20 invisible opacity-0 translate-y-2 transform transition-all duration-200 text-slate-700 dark:text-slate-200"
-                    role="menu"
-                    aria-labelledby={`submenu-${i}`}
-                  >
-                    { (item.icon || item.description) && (
-                      <div class="mb-2 flex items-start gap-3">
-                          {item.icon && <i class={`${item.icon} w-8 h-8 flex items-center justify-center text-amber-500 text-lg`} aria-hidden="true" />}
-                        <div>
-                          <div class="font-medium text-sm">{item.text}</div>
-                          {item.description && <div class="text-xs text-slate-500">{item.description}</div>}
-                        </div>
+                <div
+                  id={`submenu-${i}`}
+                  class="absolute left-0 top-full mt-3 w-80 bg-white dark:bg-slate-800 border rounded-lg p-4 shadow-lg z-20 invisible opacity-0 translate-y-2 transform transition-all duration-200 text-slate-700 dark:text-slate-200"
+                  role="menu"
+                  aria-labelledby={`submenu-${i}`}
+                >
+                  {(item.icon || item.description) && (
+                    <div class="mb-2 flex items-start gap-3">
+                      {item.icon && (
+                        <i
+                          class={`${item.icon} w-8 h-8 flex items-center justify-center text-amber-500 text-lg`}
+                          aria-hidden="true"
+                        />
+                      )}
+                      <div>
+                        <div class="font-medium text-sm">{item.text}</div>
+                        {item.description && (
+                          <div class="text-xs text-slate-500">
+                            {item.description}
+                          </div>
+                        )}
                       </div>
-                    )}
+                    </div>
+                  )}
 
-                    <ul class="grid gap-3 text-sm">
-                      {item.submenu.map((s: any) => (
-                        <li>
-                          <a href={s.href} class="block w-full p-2 rounded-md transition hover:bg-slate-50 dark:hover:bg-slate-700">
-                            <div class="flex items-start gap-3">
-                                {s.icon && <i class={`${s.icon} w-8 h-8 flex items-center justify-center text-amber-400 text-xl`} aria-hidden="true" />}
-                              <div class="min-w-0">
-                                <div class="font-medium text-sm text-slate-700 dark:text-slate-200">{s.text}</div>
-                                {s.description && <div class="text-xs text-slate-500">{s.description}</div>}
+                  <ul class="grid gap-3 text-sm">
+                    {item.submenu.map((s: any) => (
+                      <li>
+                        <a
+                          href={s.href}
+                          class="block w-full p-2 rounded-md transition hover:bg-slate-50 dark:hover:bg-slate-700"
+                        >
+                          <div class="flex items-start gap-3">
+                            {s.icon && (
+                              <i
+                                class={`${s.icon} w-8 h-8 flex items-center justify-center text-amber-400 text-xl`}
+                                aria-hidden="true"
+                              />
+                            )}
+                            <div class="min-w-0">
+                              <div class="font-medium text-sm text-slate-700 dark:text-slate-200">
+                                {s.text}
                               </div>
+                              {s.description && (
+                                <div class="text-xs text-slate-500">
+                                  {s.description}
+                                </div>
+                              )}
                             </div>
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                          </div>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              )
-              : (
-                <div class="inline-block">
-                  <a href={item.href} class="text-white hover:text-amber-300">{item.text}</a>
-                </div>
-              )
-          ))
+              </div>
+            ) : (
+              <div class="inline-block">
+                <a href={item.href} class="text-white hover:text-amber-300">
+                  {item.text}
+                </a>
+              </div>
+            ),
+          )
         }
       </nav>
     </div>
@@ -127,30 +215,107 @@ const nav: any = headerMenu;
 <script>
   (function () {
     // handle multiple submenu toggles dynamically
-    const toggles = Array.from(document.querySelectorAll('[data-submenu-toggle]'));
-    toggles.forEach(btn => {
-      const idx = btn.getAttribute('data-index');
+    const toggles = Array.from(
+      document.querySelectorAll("[data-submenu-toggle]"),
+    );
+    toggles.forEach((btn) => {
+      const idx = btn.getAttribute("data-index");
       const menu = document.getElementById(`submenu-${idx}`)!;
       if (!menu) return;
       let hideTimeout = 0;
 
       function openMenu() {
         clearTimeout(hideTimeout);
-        menu.classList.remove('invisible','opacity-0','translate-y-2');
-        menu.classList.add('visible','opacity-100','translate-y-0');
-        btn.setAttribute('aria-expanded','true');
+        menu.classList.remove("invisible", "opacity-0", "translate-y-2");
+        menu.classList.add("visible", "opacity-100", "translate-y-0");
+        btn.setAttribute("aria-expanded", "true");
       }
       function closeMenu() {
-        menu.classList.remove('visible','opacity-100','translate-y-0');
-        menu.classList.add('opacity-0','translate-y-2');
-        btn.setAttribute('aria-expanded','false');
-        hideTimeout = window.setTimeout(() => menu.classList.add('invisible'), 220);
+        menu.classList.remove("visible", "opacity-100", "translate-y-0");
+        menu.classList.add("opacity-0", "translate-y-2");
+        btn.setAttribute("aria-expanded", "false");
+        hideTimeout = window.setTimeout(
+          () => menu.classList.add("invisible"),
+          220,
+        );
       }
 
-      btn.addEventListener('click', (e) => { e.stopPropagation(); if (btn.getAttribute('aria-expanded') === 'true') closeMenu(); else openMenu(); });
-      menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-      document.addEventListener('click', (e) => { if (!(e.target instanceof Node)) return; if (!menu.contains(e.target) && e.target !== btn) closeMenu(); });
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (btn.getAttribute("aria-expanded") === "true") closeMenu();
+        else openMenu();
+      });
+      menu
+        .querySelectorAll("a")
+        .forEach((a) => a.addEventListener("click", closeMenu));
+      document.addEventListener("click", (e) => {
+        if (!(e.target instanceof Node)) return;
+        if (!menu.contains(e.target) && e.target !== btn) closeMenu();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeMenu();
+      });
     });
+
+    // Header user: read from localStorage and toggle UI
+    const userJson =
+      typeof window !== "undefined" ? localStorage.getItem("user") : null;
+    const headerUser = document.getElementById("header-user");
+    const loginLink = document.getElementById("customer-login-link");
+    if (userJson && headerUser && loginLink) {
+      try {
+        const user = JSON.parse(userJson);
+        const name = user.name || user.username || user.phone || "User";
+        const initials = name
+          .split(" ")
+          .map((s: any) => (s && s[0] ? s[0] : ""))
+          .slice(0, 2)
+          .join("")
+          .toUpperCase();
+        const avatar = document.getElementById("header-user-avatar");
+        const uname = document.getElementById("header-user-name");
+        if (avatar) avatar.textContent = initials;
+        if (uname) uname.textContent = name;
+        // show user UI, hide login link
+        headerUser.classList.remove("hidden");
+        loginLink.classList.add("hidden");
+
+        const btn = document.getElementById("header-user-button");
+        const menu = document.getElementById("header-user-menu");
+        const logout = document.getElementById("header-logout");
+
+        if (btn && menu) {
+          btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            if (menu.classList.contains("hidden")) {
+              menu.classList.remove("hidden");
+            } else {
+              menu.classList.add("hidden");
+            }
+          });
+          // close on outside click
+          document.addEventListener("click", (ev) => {
+            if (!(ev.target instanceof Node)) return;
+            if (!menu.contains(ev.target) && ev.target !== btn) {
+              menu.classList.add("hidden");
+            }
+          });
+        }
+
+        if (logout) {
+          logout.addEventListener("click", () => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            // show login link again
+            headerUser.classList.add("hidden");
+            loginLink.classList.remove("hidden");
+            // redirect to home or login
+            window.location.href = "/";
+          });
+        }
+      } catch (e) {
+        console.error("Failed to parse user from localStorage", e);
+      }
+    }
   })();
 </script>

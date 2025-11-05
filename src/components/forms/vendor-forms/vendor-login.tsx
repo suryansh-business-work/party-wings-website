@@ -12,7 +12,7 @@ import SendIcon from '@mui/icons-material/Send'
 import PhoneIcon from '@mui/icons-material/Phone'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
-// using backend auth endpoints instead of local sendSms util
+// using backend auth endpoints
 
 type Props = {
   onLogin?: (phone: string) => void
@@ -30,7 +30,7 @@ const schema = Yup.object({
   otp: Yup.string(),
 })
 
-const CustomerLogin: React.FC<Props> = ({ onLogin }) => {
+const VendorLoginForm: React.FC<Props> = ({ onLogin }) => {
   const [otpSentCode, setOtpSentCode] = useState<string | null>(null)
   const [sending, setSending] = useState(false)
   const [verifying, setVerifying] = useState(false)
@@ -66,7 +66,6 @@ const CustomerLogin: React.FC<Props> = ({ onLogin }) => {
             setSnackbarMessage('OTP verified — logged in')
             setSnackbarSeverity('success')
             setSnackbarOpen(true)
-            // redirect home shortly
             setTimeout(() => (window.location.href = '/'), 1200)
           } else {
             setSnackbarMessage(data?.message || 'OTP verification failed')
@@ -136,7 +135,7 @@ const CustomerLogin: React.FC<Props> = ({ onLogin }) => {
       <div className="row justify-content-center">
         <div className="col-12 col-md-6">
           <form onSubmit={formik.handleSubmit} noValidate className="p-3 border rounded bg-white">
-            <h5 className="mb-3">Customer Login</h5>
+            <h5 className="mb-3">Vendor Login</h5>
 
             <div className="mb-3">
               <TextField
@@ -194,7 +193,6 @@ const CustomerLogin: React.FC<Props> = ({ onLogin }) => {
           </form>
         </div>
       </div>
-
       {/* Snackbar for feedback */}
       <Snackbar open={snackbarOpen} autoHideDuration={4000} onClose={() => setSnackbarOpen(false)}>
         <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
@@ -205,4 +203,4 @@ const CustomerLogin: React.FC<Props> = ({ onLogin }) => {
   )
 }
 
-export default CustomerLogin
+export default VendorLoginForm
