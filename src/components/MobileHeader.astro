@@ -1,36 +1,27 @@
 ---
-// Mobile-only header/panel (no Location / Contact on mobile)
-import logo from "../assets/logo.svg";
 import { headerMenu } from "../assets/data/header-menu";
 
 const menu: any = headerMenu;
 ---
 <nav class="md:hidden relative">
-  <!-- hamburger toggle (top-right) -->
-  <div class="absolute right-4 top-3 z-[10001]">
-    <button id="mobile-menu-toggle" aria-controls="mobile-menu-panel" aria-expanded="false" class="p-2 rounded-md text-white bg-white/5 hover:bg-white/10">
-      <i class="fas fa-bars text-2xl" aria-hidden="true"></i>
-      <span class="sr-only">Open menu</span>
-    </button>
-  </div>
-
-  <!-- full screen panel (hidden by default) - apply BG on the panel itself so it always shows -->
   <div id="mobile-menu-panel" class="fixed inset-0 z-[10000] hidden bg-[#2e1163] text-white" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="relative min-h-screen w-full overflow-auto flex flex-col bg-[#2e1163]">
-      <div class="flex items-center justify-between p-4 pt-6">
-        <a href="/" class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-white/10 rounded p-1 flex items-center justify-center">
-            <img src={logo.src} alt="Party Wings" class="w-full h-full object-contain" />
+      <div class="container">
+        <div class="row align-items-center pt-6">
+          <div class="col">
+            <a href="/" class="d-flex align-items-center">
+              <span class="font-extrabold text-lg">Party Wings</span>
+            </a>
           </div>
-          <span class="font-extrabold text-lg">Party Wings</span>
-        </a>
-
-        <button id="mobile-menu-close" aria-label="Close menu" class="p-2 rounded-md text-white hover:bg-white/10">
-          <i class="fas fa-times text-2xl" aria-hidden="true"></i>
-        </button>
+          <div class="col-auto">
+            <button id="mobile-menu-close" aria-label="Close menu" class="p-2 rounded-md text-white hover:bg-white/10">
+              <i class="fas fa-times text-2xl" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
       </div>
 
-      <div class="px-6 pt-6 pb-8 space-y-6 flex-1">
+      <div class="container px-6 pt-6 pb-8 space-y-6 flex-1">
         <div class="text-xl font-bold">Make your party unforgettable 🎉</div>
 
         <ul class="space-y-4 text-lg">

@@ -20,3 +20,7 @@ label {
   font-weight: 600;
   color: #333;
 }
+
+button#mobile-menu-toggle[aria-expanded="true"] {
+    display: none;
+}
