@@ -51,7 +51,7 @@ export default function CartButton() {
 
   return (
     <div className="relative">
-      <button onClick={() => setOpen((v) => !v)} className="px-3 py-2 rounded-md text-sm bg-transparent text-white hover:text-amber-300 flex items-center gap-2">
+      <button onClick={() => setOpen((v) => !v)} className="rounded-md text-sm bg-transparent text-white hover:text-amber-300 flex items-center gap-2">
         <i className="fa-solid fa-cart-shopping"></i>
         <span className="sr-only">View package cart</span>
         <span className="inline-block bg-amber-500 text-white text-xs rounded-full px-2 py-0.5">{items.length}</span>
@@ -76,7 +76,7 @@ export default function CartButton() {
             </ul>
           )}
           <div className="mt-3 flex justify-between">
-            <a href="#package" className="text-sm px-3 py-1 bg-amber-500 text-white rounded-md">Open Package</a>
+            <a href="#package" className="text-sm bg-amber-500 text-white rounded-md">Open Package</a>
             <button onClick={() => { try { /* @ts-ignore */ window.clearQuote?.(); } catch(e){} setItems([]); }} className="text-sm px-3 py-1 border rounded-md">Clear</button>
           </div>
         </div>

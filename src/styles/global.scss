@@ -2,6 +2,7 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap-grid.min.css');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Cursive:wght@400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 $primary-color: #4f46e5;
 
@@ -117,4 +118,23 @@ h6 {
 
 button {
     white-space: nowrap;
+}
+
+
+.header-logo span {
+    font-family: "Edu NSW ACT Cursive", cursive;
+    font-weight: 600;
+    margin-right: 4px;
+    color: #d97706;
+    font-size: 22px;
+}
+
+.header-logo a {
+    color: #fff;
+    font-size: 20px;
+}
+
+.header-logo {
+    margin-right: 50px;
+    user-select: none;
 }

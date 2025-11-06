@@ -8,12 +8,12 @@ export const headerMenu = [
       { text: "Other Services", href: "/other-service", description: "Makeup, MC, planning and more", icon: "fas fa-ellipsis-h" },
     ],
   },
-  {
-    text: "Tools",
-    submenu: [
-      { text: "Guest Management", href: "/tools/guest-management", description: "Manage guest lists & RSVPs", icon: "fas fa-users" },
-      { text: "ToDos", href: "/tools/todos", description: "Checklist and task manager", icon: "fas fa-check-square" }    ],
-  },
+  // {
+  //   text: "Tools",
+  //   submenu: [
+  //     { text: "Guest Management", href: "/tools/guest-management", description: "Manage guest lists & RSVPs", icon: "fas fa-users" },
+  //     { text: "ToDos", href: "/tools/todos", description: "Checklist and task manager", icon: "fas fa-check-square" }    ],
+  // },
   {
     text: "Policies",
     submenu: [
@@ -22,7 +22,7 @@ export const headerMenu = [
       { text: "Refund Policy", href: "/policies/refund-policy", description: "Checklist and task manager", icon: "fas fa-check-square" }
     ],
   },
-  { text: "Price Calulator", href: "/price-calulator", description: "Quick price estimates", icon: "fas fa-calculator" },
+  // { text: "Price Calulator", href: "/price-calulator", description: "Quick price estimates", icon: "fas fa-calculator" },
   { text: "Store", href: "/store", description: "Get in touch with us", icon: "fas fa-envelope" },
   { text: "About", href: "/about", description: "Learn about Party Wings", icon: "fas fa-info-circle" },
   { text: "Blog", href: "/blog", description: "Tips, stories and ideas", icon: "fas fa-blog" },

@@ -21,7 +21,7 @@ const items = getBreadcrumbItems(url);
 ---
 
 {items.length > 0 && url.length > 1 && (
-  <nav aria-label="Breadcrumb" class="max-w-6xl mx-auto p-3">
+  <nav aria-label="Breadcrumb" class="container p-3">
     <ol class="flex items-center gap-1 text-sm text-gray-700">
       {items.map((item, idx) => (
         <li class="flex items-center">
