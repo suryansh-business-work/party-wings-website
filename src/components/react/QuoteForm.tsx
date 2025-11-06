@@ -13,10 +13,10 @@ export default function QuoteForm() {
     payload.selectedServices = items;
     setStatus('Sending...');
     try {
-      const res = await fetch('/api/submit-quote', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
+      const res = await fetch('/api/submit-package', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
       const json = await res.json();
       if (res.ok) {
-        setStatus('Quote request sent! We will contact you shortly.');
+        setStatus('Package request sent! We will contact you shortly.');
         clear();
         form.reset();
       } else {
@@ -29,7 +29,7 @@ export default function QuoteForm() {
 
   return (
     <section className="max-w-2xl mx-auto bg-white dark:bg-slate-800 rounded-lg p-6 card-shadow">
-      <h2 className="text-xl font-semibold">Request a Quote</h2>
+      <h2 className="text-xl font-semibold">Request a Package</h2>
       <p className="text-sm text-slate-600 dark:text-slate-300 mt-1">Selected services will appear below. Fill your details and submit.</p>
 
       <div className="mt-4 space-y-2 text-sm text-slate-700 dark:text-slate-200">
@@ -70,7 +70,7 @@ export default function QuoteForm() {
         </div>
 
         <div className="flex items-center gap-3">
-          <button type="submit" className="px-4 py-2 bg-amber-500 text-white rounded-md">Send Quote Request</button>
+          <button type="submit" className="px-4 py-2 bg-amber-500 text-white rounded-md">Send Package Request</button>
           <button type="button" onClick={() => clear()} className="px-3 py-2 border rounded-md text-sm">Clear Selection</button>
         </div>
 

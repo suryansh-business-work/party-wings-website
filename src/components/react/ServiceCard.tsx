@@ -20,10 +20,10 @@ export default function ServiceCard({ service }: { service: Service }) {
             {service?.category ? <div className="text-xs text-amber-600 font-medium mt-1">{service.category}</div> : null}
             {service?.description ? <p className="text-sm text-slate-600 dark:text-slate-300 mt-2">{service.description}</p> : null}
           </div>
-          <div className="text-right">
-            {service?.price ? <div className="text-sm text-amber-600 font-bold">{service.price}</div> : null}
-            <button onClick={() => add(service)} disabled={!service?.id} className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500 text-white text-sm hover:bg-amber-600 disabled:opacity-50 disabled:cursor-not-allowed">Add to Quote</button>
-          </div>
+        </div>
+        <div>
+          {service?.price ? <div className="text-sm text-amber-600 font-bold">{service.price}</div> : null}
+          <button onClick={() => add(service)} disabled={!service?.id} className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500 text-white text-sm hover:bg-amber-600 disabled:opacity-50 disabled:cursor-not-allowed">Add to package</button>
         </div>
       </div>
     </article>

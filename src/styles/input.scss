@@ -183,8 +183,12 @@
 //     padding-left: 40px !important;
 // }
 
-input:focus {
+input, input:focus {
   outline: 0 !important;
   border: 0 !important;
   box-shadow: none !important;
+}
+
+input:focus {
+  outline: 1px solid #fff !important;
 }

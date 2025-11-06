@@ -53,15 +53,15 @@ export default function CartButton() {
     <div className="relative">
       <button onClick={() => setOpen((v) => !v)} className="px-3 py-2 rounded-md text-sm bg-transparent text-white hover:text-amber-300 flex items-center gap-2">
         <i className="fa-solid fa-cart-shopping"></i>
-        <span className="sr-only">View quote cart</span>
+        <span className="sr-only">View package cart</span>
         <span className="inline-block bg-amber-500 text-white text-xs rounded-full px-2 py-0.5">{items.length}</span>
       </button>
 
       {open && (
         <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-slate-800 border rounded-md p-3 shadow-lg z-50">
-          <h4 className="font-semibold mb-2">Quote ({items.length})</h4>
+          <h4 className="font-semibold mb-2">Package ({items.length})</h4>
           {items.length === 0 ? (
-            <div className="text-sm text-slate-600">No items in your quote.</div>
+            <div className="text-sm text-slate-600">No items in your package.</div>
           ) : (
             <ul className="space-y-2 max-h-48 overflow-auto">
               {items.map((it: any) => (
@@ -76,7 +76,7 @@ export default function CartButton() {
             </ul>
           )}
           <div className="mt-3 flex justify-between">
-            <a href="#quote" className="text-sm px-3 py-1 bg-amber-500 text-white rounded-md">Open Quote</a>
+            <a href="#package" className="text-sm px-3 py-1 bg-amber-500 text-white rounded-md">Open Package</a>
             <button onClick={() => { try { /* @ts-ignore */ window.clearQuote?.(); } catch(e){} setItems([]); }} className="text-sm px-3 py-1 border rounded-md">Clear</button>
           </div>
         </div>

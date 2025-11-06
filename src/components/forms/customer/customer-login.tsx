@@ -1,18 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-// layout uses Bootstrap grid classes instead of MUI Box/Stack/Typography
+import Stepper from '@mui/material/Stepper'
+import Step from '@mui/material/Step'
+import StepLabel from '@mui/material/StepLabel'
+import Box from '@mui/material/Box'
 import InputAdornment from '@mui/material/InputAdornment'
 import CircularProgress from '@mui/material/CircularProgress'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
-import SendIcon from '@mui/icons-material/Send'
 import PhoneIcon from '@mui/icons-material/Phone'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-
-// using backend auth endpoints instead of local sendSms util
+import { LinearProgress, Typography } from '@mui/material'
 
 type Props = {
   onLogin?: (phone: string) => void
@@ -26,7 +27,7 @@ type Values = {
 const schema = Yup.object({
   phone: Yup.string()
     .required('Phone number is required')
-    .matches(/^[0-9()+\-\s]{7,15}$/, 'Enter a valid phone number'),
+    .matches(/^\d{10}$/, 'Enter a valid 10-digit phone number'),
   otp: Yup.string(),
 })
 
@@ -35,6 +36,8 @@ const CustomerLogin: React.FC<Props> = ({ onLogin }) => {
   const [sending, setSending] = useState(false)
   const [verifying, setVerifying] = useState(false)
   const [loggedIn, setLoggedIn] = useState(false)
+  const [step, setStep] = useState<number>(1)
+  const [completedSteps, setCompletedSteps] = useState<Record<number, boolean>>({})
   const [snackbarOpen, setSnackbarOpen] = useState(false)
   const [snackbarMessage, setSnackbarMessage] = useState('')
   const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error' | 'warning'>('success')
@@ -43,12 +46,23 @@ const CustomerLogin: React.FC<Props> = ({ onLogin }) => {
     initialValues: { phone: '', otp: '' },
     validationSchema: schema,
     onSubmit: async (values, { setSubmitting }) => {
-      if (loggedIn) {
+      // If on step 1, pressing Enter will request OTP
+      if (step === 1) {
+        await handleSendOtp()
         setSubmitting(false)
         return
       }
 
-      if (otpSentCode) {
+      // If on step 2, pressing Enter will verify OTP
+      if (step === 2) {
+        // validate OTP is 6 digits
+        if (!isOtpValid(values.otp)) {
+          formik.setFieldTouched('otp', true)
+          formik.setFieldError('otp', 'Enter a 6-digit numeric OTP')
+          setSubmitting(false)
+          return
+        }
+        // reuse verification flow
         setVerifying(true)
         try {
           const res = await fetch('http://localhost:4001/auth/verify-otp', {
@@ -57,7 +71,7 @@ const CustomerLogin: React.FC<Props> = ({ onLogin }) => {
             body: JSON.stringify({ phone: values.phone, otp: values.otp }),
           })
           const data = await res.json()
-          if (data && data.status === 'success') {
+          if (data.status === 'success') {
             const token = data.data?.token
             const user = data.data?.user
             if (token) localStorage.setItem('token', token)
@@ -82,15 +96,19 @@ const CustomerLogin: React.FC<Props> = ({ onLogin }) => {
           setVerifying(false)
           setSubmitting(false)
         }
-        return
       }
-
-      setSnackbarMessage('Please request an OTP first')
-      setSnackbarSeverity('warning')
-      setSnackbarOpen(true)
-      setSubmitting(false)
     },
   })
+
+  const isOtpValid = (otp: string) => /^[0-9]{6}$/.test(otp)
+
+  const otpRef = useRef<HTMLInputElement | null>(null)
+
+  useEffect(() => {
+    if (step === 2 && otpRef.current) {
+      otpRef.current.focus()
+    }
+  }, [step])
 
   const handleSendOtp = async () => {
     if (!formik.values.phone || formik.errors.phone) {
@@ -111,7 +129,12 @@ const CustomerLogin: React.FC<Props> = ({ onLogin }) => {
         setSnackbarMessage(data.message || 'OTP generated for login')
         setSnackbarSeverity('success')
         setSnackbarOpen(true)
+        // mark step 1 completed
+        setCompletedSteps((c) => ({ ...c, 0: true }))
+        // move to step 2 to show OTP input only when backend returned data
+        setStep(2)
       } else {
+        // show backend message (e.g., "User not found") and do NOT advance to step 2
         setSnackbarMessage(data?.message || 'Failed to request OTP')
         setSnackbarSeverity('error')
         setSnackbarOpen(true)
@@ -126,74 +149,114 @@ const CustomerLogin: React.FC<Props> = ({ onLogin }) => {
     }
   }
 
+  // ensure phone input only digits and max 10
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const digits = e.target.value.replace(/\D/g, '').slice(0, 10)
+    formik.setFieldValue('phone', digits)
+  }
+
+  // ensure OTP input only digits and max 6
+  const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const digits = e.target.value.replace(/\D/g, '').slice(0, 6)
+    formik.setFieldValue('otp', digits)
+  }
+
   const handleVerify = async () => {
     // trigger form submit which handles verification when otpSentCode exists
     formik.handleSubmit()
   }
 
+
   return (
-    <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-12 col-md-6">
-          <form onSubmit={formik.handleSubmit} noValidate className="p-3 border rounded bg-white">
-            <h5 className="mb-3">Customer Login</h5>
+    <>
+      {(sending || verifying) && <LinearProgress />}
+      <form onSubmit={formik.handleSubmit} noValidate className="p-3 border rounded bg-white position-relative mb-3">
+        <Box sx={{ width: '100%', mb: 5 }}>
+          {/* Left-align the Stepper instead of centering labels */}
+          <Stepper activeStep={step - 1} sx={{ mt: 1, mb: 2, justifyContent: 'flex-start', display: 'flex' }}>
+            <Step completed={Boolean(completedSteps[0])}>
+              <StepLabel
+                optional={<Typography variant="caption" color="text.secondary">10-digit phone</Typography>}>
+                Phone
+              </StepLabel>
+            </Step>
+            <Step completed={Boolean(completedSteps[1])}>
+              <StepLabel
+                optional={<Typography variant="caption" color="text.secondary">6-digit code</Typography>}>
+                OTP
+              </StepLabel>
+            </Step>
+          </Stepper>
+        </Box>
 
-            <div className="mb-3">
-              <TextField
-                id="phone"
-                name="phone"
-                label="Phone Number"
-                helperText={formik.touched.phone && formik.errors.phone ? formik.errors.phone : 'Enter your registered phone'}
-                error={formik.touched.phone && Boolean(formik.errors.phone)}
-                value={formik.values.phone}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <PhoneIcon />
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      {loggedIn ? (
-                        <CheckCircleIcon color="success" />
-                      ) : (
-                        <Button onClick={handleSendOtp} size="small" variant="outlined" endIcon={sending ? <CircularProgress size={16} /> : <SendIcon />}>
-                          Send OTP
-                        </Button>
-                      )}
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </div>
-
-            {otpSentCode && !loggedIn && (
-              <div className="d-flex gap-2 align-items-center mb-3">
-                <TextField
-                  id="otp"
-                  name="otp"
-                  label="OTP"
-                  value={formik.values.otp}
-                  onChange={formik.handleChange}
-                  size="small"
-                />
-                <Button onClick={handleVerify} variant="contained" disabled={verifying} startIcon={<SendIcon />}>
-                  {verifying ? <CircularProgress size={18} /> : 'Verify OTP'}
-                </Button>
+        <div className="mb-3">
+          {step === 1 ? (
+            <TextField
+              id="phone"
+              name="phone"
+              label="Phone Number"
+              helperText={formik.touched.phone && formik.errors.phone ? formik.errors.phone : 'Enter your registered phone'}
+              error={formik.touched.phone && Boolean(formik.errors.phone)}
+              value={formik.values.phone}
+              onChange={handlePhoneChange}
+              onBlur={formik.handleBlur}
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PhoneIcon />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    {loggedIn ? <CheckCircleIcon color="success" /> : null}
+                  </InputAdornment>
+                ),
+                inputProps: { inputMode: 'numeric', pattern: '\\d*', maxLength: 10 },
+              }}
+            />
+          ) : (
+            // Step 2: show phone as plain text with font-awesome phone icon and a back icon+text
+            <div className="d-flex align-items-center justify-content-between border rounded p-2">
+              <div className="d-flex align-items-center gap-2">
+                <i className="fa-solid fa-phone text-muted" aria-hidden="true" />
+                <span className="fw-semibold">{formik.values.phone || '—'}</span>
               </div>
-            )}
-
-            <div className="d-flex justify-content-end">
-              <Button type="submit" variant="contained" disabled={formik.isSubmitting || !loggedIn}>
-                {formik.isSubmitting ? <CircularProgress size={18} /> : 'Continue'}
-              </Button>
+              <button type="button" className="btn btn-link text-decoration-none" onClick={() => { setStep(1); setOtpSentCode(null); formik.setFieldValue('otp', ''); }}>
+                <i className="fa-solid fa-arrow-left me-2" aria-hidden="true"></i>
+                Back
+              </button>
             </div>
-          </form>
+          )}
         </div>
-      </div>
+        {step === 2 && otpSentCode && !loggedIn && (
+          <div className="d-flex gap-2 align-items-center mb-3">
+            <TextField
+              id="otp"
+              name="otp"
+              label="OTP"
+              value={formik.values.otp}
+              onChange={handleOtpChange}
+              size="small"
+              inputRef={(el) => (otpRef.current = el)}
+              error={Boolean(formik.touched.otp && formik.errors.otp)}
+              helperText={formik.touched.otp && formik.errors.otp ? formik.errors.otp : ''}
+              inputProps={{ inputMode: 'numeric', pattern: '\\d*', maxLength: 6 }}
+              disabled={verifying}
+            />
+          </div>
+        )}
+
+        <div className="d-flex justify-content-end">
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={sending || verifying || formik.isSubmitting || (step === 1 ? sending || !formik.values.phone || Boolean(formik.errors.phone) : verifying || !isOtpValid(formik.values.otp))}
+          >
+            {formik.isSubmitting || (step === 1 ? sending : verifying) ? <CircularProgress size={18} /> : (step === 1 ? 'Send OTP' : 'Verify & Login')}
+          </Button>
+        </div>
+      </form>
 
       {/* Snackbar for feedback */}
       <Snackbar open={snackbarOpen} autoHideDuration={4000} onClose={() => setSnackbarOpen(false)}>
@@ -201,7 +264,7 @@ const CustomerLogin: React.FC<Props> = ({ onLogin }) => {
           {snackbarMessage}
         </Alert>
       </Snackbar>
-    </div>
+    </>
   )
 }
 

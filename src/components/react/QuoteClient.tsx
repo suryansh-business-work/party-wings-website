@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useQuote } from './QuoteProvider';
 
-// Expose quote helpers to window for backward compatibility with non-React code.
+// Expose package helpers to window for backward compatibility with non-React code.
 export default function QuoteClient(): null {
   const { add, remove, clear, items } = useQuote();
 
