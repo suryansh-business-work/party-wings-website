@@ -14,6 +14,7 @@ import Alert from '@mui/material/Alert'
 import PhoneIcon from '@mui/icons-material/Phone'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import { LinearProgress, Typography } from '@mui/material'
+import { getApiHost } from '../../../utils/host'
 
 type Props = {
   onLogin?: (phone: string) => void
@@ -65,7 +66,7 @@ const VendorLogin: React.FC<Props> = ({ onLogin }) => {
         // reuse verification flow
         setVerifying(true)
         try {
-          const res = await fetch('http://localhost:4001/auth/verify-otp', {
+          const res = await fetch(`${getApiHost()}/auth/verify-otp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ phone: values.phone, otp: values.otp }),
@@ -118,7 +119,7 @@ const VendorLogin: React.FC<Props> = ({ onLogin }) => {
     }
     try {
       setSending(true)
-      const res = await fetch('http://localhost:4001/auth/login', {
+  const res = await fetch(`${getApiHost()}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone: formik.values.phone }),
