@@ -7,32 +7,22 @@ import Stack from '@mui/material/Stack'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import InputAdornment from '@mui/material/InputAdornment'
-import IconButton from '@mui/material/IconButton'
+// IconButton removed (not used)
 import CircularProgress from '@mui/material/CircularProgress'
 import SendIcon from '@mui/icons-material/Send'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import EmailIcon from '@mui/icons-material/Email'
 import PhoneIcon from '@mui/icons-material/Phone'
 import BusinessIcon from '@mui/icons-material/Business'
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
+// FormControl / Select related imports removed (multi-select removed)
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormHelperText from '@mui/material/FormHelperText'
-import ListItemText from '@mui/material/ListItemText'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import Chip from '@mui/material/Chip'
 
-import { sendSms } from '../../../utils/sendSms'
-import { sendEmail } from '../../../utils/sendEmail'
+import { getApiHost } from '../../../utils/host'
 
 type Values = {
   businessName: string
   phone: string
-  email: string
-  businesses?: string[]
   agreeTerms?: boolean
   agreePrivacy?: boolean
   agreeVendorPolicy?: boolean
@@ -41,132 +31,112 @@ type Values = {
 
 const validationSchema = Yup.object({
   businessName: Yup.string().required('Business name is required'),
-  phone: Yup.string()
-    .required('Phone number is required')
-    .matches(/^[0-9()+\-\s]{7,15}$/, 'Enter a valid phone number'),
-  email: Yup.string().email('Invalid email').required('Email is required'),
-  businesses: Yup.array().of(Yup.string()),
+  phone: Yup.string().required('Phone number is required').matches(/^[0-9]{10}$/, 'Enter a valid 10 digit phone number'),
   agreeTerms: Yup.boolean().oneOf([true], 'You must accept Terms & Conditions'),
   agreePrivacy: Yup.boolean().oneOf([true], 'You must accept Data Privacy'),
   agreeVendorPolicy: Yup.boolean().oneOf([true], 'You must accept Vendor Policy'),
   agreeVendorPrivacy: Yup.boolean().oneOf([true], 'You must accept Vendor Privacy Policy'),
 })
 
-const BUSINESS_OPTIONS: { id: string; name: string }[] = [
-  { id: 'decoration', name: 'Decoration Service' },
-  { id: 'catering', name: 'Catering Service' },
-  { id: 'photography', name: 'Photography Service' },
-  { id: 'makeup', name: 'Mekup & Gromming' },
-  { id: 'party-supplies', name: 'I run a party supplies business.' },
-  { id: 'other', name: 'Other Party Services' },
-]
+// business options removed since multi-select was removed
 
 const VendorRegistrationForm: React.FC = () => {
-  const [smsSentCode, setSmsSentCode] = useState<string | null>(null)
-  const [emailSentCode, setEmailSentCode] = useState<string | null>(null)
+  const [otpRequested, setOtpRequested] = useState(false)
   const [smsVerified, setSmsVerified] = useState(false)
-  const [emailVerified, setEmailVerified] = useState(false)
-  const [sendingSms, setSendingSms] = useState(false)
-  const [sendingEmail, setSendingEmail] = useState(false)
-  const [verifyingSms, setVerifyingSms] = useState(false)
-  const [verifyingEmail, setVerifyingEmail] = useState(false)
+  const [sendingOtp, setSendingOtp] = useState(false)
+  const [verifyingOtp, setVerifyingOtp] = useState(false)
   const [smsVerifyInput, setSmsVerifyInput] = useState('')
-  const [emailVerifyInput, setEmailVerifyInput] = useState('')
 
   const formik = useFormik<Values>({
-  initialValues: { businessName: '', phone: '', email: '', businesses: [], agreeTerms: false, agreePrivacy: false, agreeVendorPolicy: false, agreeVendorPrivacy: false },
+    initialValues: { businessName: '', phone: '', agreeTerms: false, agreePrivacy: false, agreeVendorPolicy: false, agreeVendorPrivacy: false },
     validationSchema,
     onSubmit: async (values, { setSubmitting }) => {
-      // final submit: only allowed if both verified
-      if (!smsVerified || !emailVerified) {
-        alert('Please verify both phone and email before submitting.')
-        setSubmitting(false)
-        return
-      }
-
-      // TODO: integrate real submit endpoint — for now, just log
-      console.log('Submitting vendor registration', values)
-      alert('Submitted successfully')
+      // submission is handled after OTP verify which redirects on success
       setSubmitting(false)
     },
   })
 
-  const handleSendSms = async () => {
+  const handleSendOtp = async () => {
+    // require agreements before sending OTP
+    if (!formik.values.agreeTerms || !formik.values.agreePrivacy || !formik.values.agreeVendorPolicy || !formik.values.agreeVendorPrivacy) {
+      alert('Please accept all policies before requesting OTP')
+      return
+    }
+
     if (!formik.values.phone || formik.errors.phone) {
       formik.setFieldTouched('phone', true)
       formik.setFieldError('phone', formik.errors.phone || 'Enter a valid phone')
       return
     }
+
     try {
-      setSendingSms(true)
-      // Call provided util which returns a code (utils currently returns 123456)
-      const code = await sendSms(formik.values.phone, 'Verification code', 'Your verification code')
-      // normalise to string
-      setSmsSentCode(String(code))
-      setSmsVerified(false)
-      alert('Verification SMS sent')
+      setSendingOtp(true)
+      const res = await fetch(`${getApiHost()}/auth/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: formik.values.businessName, phone: formik.values.phone, role: 'vendor' }),
+      })
+      const data = await res.json()
+      if (data && (data.status === 'success' || data.statusCode === 200)) {
+        setOtpRequested(true)
+        setSmsVerified(false)
+        alert(data.message || 'OTP generated for signup. Verify OTP to receive token')
+      } else {
+        console.error('signup error', data)
+        alert(data?.message || 'Failed to request OTP')
+      }
     } catch (err) {
       console.error(err)
-      alert('Failed to send SMS')
+      alert('Failed to request OTP')
     } finally {
-      setSendingSms(false)
+      setSendingOtp(false)
     }
   }
 
-  const handleSendEmail = async () => {
-    if (!formik.values.email || formik.errors.email) {
-      formik.setFieldTouched('email', true)
-      formik.setFieldError('email', formik.errors.email || 'Enter a valid email')
-      return
-    }
-    try {
-      setSendingEmail(true)
-      const code = await sendEmail(formik.values.email, 'Verification code', 'Your verification code')
-      setEmailSentCode(String(code))
-      setEmailVerified(false)
-      alert('Verification Email sent')
-    } catch (err) {
-      console.error(err)
-      alert('Failed to send Email')
-    } finally {
-      setSendingEmail(false)
-    }
-  }
+  // email flow removed (signup/OTP handled via server and email not required)
 
-  const handleVerifySms = async () => {
-    if (!smsSentCode) {
-      alert('Send SMS first')
+  const handleVerifyOtp = async () => {
+    if (!otpRequested) {
+      alert('Request an OTP first')
       return
     }
-    setVerifyingSms(true)
-    // In a real app you'd verify server-side. Here we compare to the sent code.
-    setTimeout(() => {
-      if (smsVerifyInput === smsSentCode) {
+    setVerifyingOtp(true)
+    try {
+      const res = await fetch(`${getApiHost()}/auth/verify-otp`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: formik.values.phone, otp: smsVerifyInput }),
+      })
+      const data = await res.json()
+      if (data && data.status === 'success' && data.data) {
+        // expect token and user in data
+        const token = data.data.token
+        const user = data.data.user
+        if (token) {
+          try {
+            localStorage.setItem('token', token)
+            localStorage.setItem('user', JSON.stringify(user || {}))
+          } catch (e) {
+            console.warn('failed to persist user/token', e)
+          }
+        }
         setSmsVerified(true)
-        alert('Phone verified')
+        alert(data.message || 'Signup successful')
+        // redirect to vendor dashboard
+        window.location.href = '/portals/vendor/dashboard'
       } else {
-        alert('Incorrect SMS code')
+        console.error('verify-otp error', data)
+        alert(data?.message || 'OTP verification failed')
       }
-      setVerifyingSms(false)
-    }, 500)
+    } catch (err) {
+      console.error(err)
+      alert('OTP verification failed')
+    } finally {
+      setVerifyingOtp(false)
+    }
   }
 
-  const handleVerifyEmail = async () => {
-    if (!emailSentCode) {
-      alert('Send Email first')
-      return
-    }
-    setVerifyingEmail(true)
-    setTimeout(() => {
-      if (emailVerifyInput === emailSentCode) {
-        setEmailVerified(true)
-        alert('Email verified')
-      } else {
-        alert('Incorrect Email code')
-      }
-      setVerifyingEmail(false)
-    }, 500)
-  }
+  // email verification removed
 
   return (
     <Box sx={{ width: '100%', p: 2 }}>
@@ -207,36 +177,7 @@ const VendorRegistrationForm: React.FC = () => {
                 }}
               />
 
-              {/* Multi-select: Which business(es) are you in */}
-              <FormControl fullWidth>
-                <InputLabel id="businesses-label">You are in which business</InputLabel>
-                <Select
-                  labelId="businesses-label"
-                  id="businesses"
-                  multiple
-                  value={formik.values.businesses || []}
-                  onChange={(e) => formik.setFieldValue('businesses', e.target.value)}
-                  input={<OutlinedInput label="You are in which business" />}
-                  renderValue={(selected) => (
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                      {(selected as string[]).map((id) => {
-                        const opt = BUSINESS_OPTIONS.find((o) => o.id === id)
-                        return <Chip key={id} label={opt ? opt.name : id} size="small" />
-                      })}
-                    </Box>
-                  )}
-                >
-                  {BUSINESS_OPTIONS.map((opt) => (
-                    <MenuItem key={opt.id} value={opt.id}>
-                      <Checkbox checked={(formik.values.businesses || []).indexOf(opt.id) > -1} />
-                      <ListItemText primary={opt.name} />
-                    </MenuItem>
-                  ))}
-                </Select>
-                <Typography variant="caption" color="text.secondary">
-                  Select one or more services that best describe your business
-                </Typography>
-              </FormControl>
+              {/* Business name input (no email/business multi-select per request) */}
 
               <TextField
                 id="phone"
@@ -249,7 +190,7 @@ const VendorRegistrationForm: React.FC = () => {
                 }
                 error={formik.touched.phone && Boolean(formik.errors.phone)}
                 value={formik.values.phone}
-                onChange={formik.handleChange}
+                onChange={(e) => formik.setFieldValue('phone', e.target.value.replace(/\D/g, '').slice(0, 10))}
                 onBlur={formik.handleBlur}
                 fullWidth
                 InputProps={{
@@ -264,85 +205,36 @@ const VendorRegistrationForm: React.FC = () => {
                         <CheckCircleIcon color="success" />
                       ) : (
                         <Button
-                          onClick={handleSendSms}
+                          onClick={handleSendOtp}
                           size="small"
                           variant="outlined"
-                          endIcon={sendingSms ? <CircularProgress size={16} /> : <SendIcon />}
+                          endIcon={sendingOtp ? <CircularProgress size={16} /> : <SendIcon />}
+                          disabled={sendingOtp}
                         >
-                          Send SMS
+                          Request OTP
                         </Button>
                       )}
                     </InputAdornment>
                   ),
                 }}
-              />
+                />
 
-              {smsSentCode && !smsVerified && (
-                <Stack direction="row" spacing={1} alignItems="center">
-                  <TextField
-                    label="SMS code"
-                    value={smsVerifyInput}
-                    onChange={(e) => setSmsVerifyInput(e.target.value)}
-                    size="small"
-                  />
-                  <Button onClick={handleVerifySms} variant="contained" disabled={verifyingSms} startIcon={<SendIcon />}>
-                    {verifyingSms ? <CircularProgress size={18} /> : 'Verify SMS'}
-                  </Button>
-                </Stack>
-              )}
+                {otpRequested && !smsVerified && (
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <TextField
+                      label="OTP code"
+                      value={smsVerifyInput}
+                      onChange={(e) => setSmsVerifyInput(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                      size="small"
+                      inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', maxLength: 6 }}
+                    />
+                    <Button onClick={handleVerifyOtp} variant="contained" disabled={verifyingOtp} startIcon={<SendIcon />}>
+                      {verifyingOtp ? <CircularProgress size={18} /> : 'Verify OTP'}
+                    </Button>
+                  </Stack>
+                )}
 
-              <TextField
-                id="email"
-                name="email"
-                label="Email"
-                helperText={
-                  formik.touched.email && formik.errors.email
-                    ? formik.errors.email
-                    : 'Your registered Business email'
-                }
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <EmailIcon />
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      {emailVerified ? (
-                        <CheckCircleIcon color="success" />
-                      ) : (
-                        <Button
-                          onClick={handleSendEmail}
-                          size="small"
-                          variant="outlined"
-                          endIcon={sendingEmail ? <CircularProgress size={16} /> : <SendIcon />}
-                        >
-                          Send Email
-                        </Button>
-                      )}
-                    </InputAdornment>
-                  ),
-                }}
-              />
-
-              {emailSentCode && !emailVerified && (
-                <Stack direction="row" spacing={1} alignItems="center">
-                  <TextField
-                    label="Email code"
-                    value={emailVerifyInput}
-                    onChange={(e) => setEmailVerifyInput(e.target.value)}
-                    size="small"
-                  />
-                  <Button onClick={handleVerifyEmail} variant="contained" disabled={verifyingEmail} startIcon={<SendIcon />}>
-                    {verifyingEmail ? <CircularProgress size={18} /> : 'Verify Email'}
-                  </Button>
-                </Stack>
-              )}
+              {/* email removed per request; signup/OTP handled via server */}
 
               {/* Agreement checkboxes (separate) */}
               <Box sx={{ mt: 1 }}>
@@ -427,9 +319,7 @@ const VendorRegistrationForm: React.FC = () => {
                 <Button
                   type="submit"
                   variant="contained"
-                  disabled={
-                    !smsVerified || !emailVerified || !formik.values.agreeTerms || !formik.values.agreePrivacy || !formik.values.agreeVendorPolicy || !formik.values.agreeVendorPrivacy || formik.isSubmitting
-                  }
+                  disabled={formik.isSubmitting}
                 >
                   {formik.isSubmitting ? <CircularProgress size={18} /> : 'Submit'}
                 </Button>

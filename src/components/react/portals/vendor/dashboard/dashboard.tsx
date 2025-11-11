@@ -10,7 +10,7 @@ import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import Divider from '@mui/material/Divider'
-import Header from './components/Header'
+import Header from '../components/Header'
 
 const sampleOrders = [
   { id: 'ORD-1001', customer: 'Asha Patel', total: '₹2,450', status: 'Pending' },

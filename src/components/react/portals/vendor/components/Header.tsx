@@ -15,6 +15,18 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import Tooltip from '@mui/material/Tooltip';
+import HomeIcon from '@mui/icons-material/Home';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import PeopleIcon from '@mui/icons-material/People';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -57,9 +69,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
+  const drawerWidth = 300
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
+  const [drawerOpen, setDrawerOpen] = React.useState(true)
+  // default selected: 3rd option (Store Management) — 0-based index 2
+  const [selectedIndex, setSelectedIndex] = React.useState<number>(-1)
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -98,8 +114,7 @@ export default function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={() => { handleMenuClose(); handleLogout(); }}>Logout</MenuItem>
     </Menu>
   );
 
@@ -120,27 +135,7 @@ export default function Header() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem onClick={() => { handleMobileMenuClose(); handleLogout(); }}>
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -150,85 +145,155 @@ export default function Header() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>Logout</p>
       </MenuItem>
     </Menu>
   );
 
+  const navItems = [
+    { label: 'Dashboard', icon: <DashboardIcon />, href: '/portals/vendor/dashboard' },
+    { label: 'Orders', icon: <ShoppingCartIcon />, href: '/portals/vendor/vendor-orders' },
+    { label: 'Store Management', icon: <StorefrontIcon />, href: '/portals/vendor/vendor-store-management' },
+    { label: 'Vendor Management', icon: <PeopleIcon />, href: '/portals/vendor/vendor-management' },
+  ]
+
+  const handleNavClick = (index: number, href?: string) => {
+    setSelectedIndex(index)
+    if (href) window.location.href = href
+  }
+
+  const handleLogout = () => {
+    try {
+      localStorage.clear()
+    } catch (e) {
+      console.warn('localStorage clear failed', e)
+    }
+    // redirect to vendor login page
+    window.location.href = '/vendor-login'
+  }
+
+  // Set active item based on current pathname on mount (client-side only)
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return
+    const path = window.location.pathname || '/'
+    const idx = navItems.findIndex((item) => path === item.href || path.startsWith(item.href + '/') || path.startsWith(item.href))
+    if (idx !== -1) setSelectedIndex(idx)
+  }, [])
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            MUI
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
+    <Box sx={{ display: 'flex' }}>
+      <Drawer
+        variant="persistent"
+        open={drawerOpen}
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          // place drawer below the fixed AppBar
+          '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box', },
+        }}
+      >
+        <Toolbar />
+        <Divider />
+        <List>
+          {navItems.map((item, idx) => (
+            <ListItemButton
+              key={item.label}
+              selected={selectedIndex === idx}
+              onClick={() => handleNavClick(idx, item.href)}
+              sx={{
+                borderRadius: 1,
+                mb: 0.5,
+                '&.Mui-selected': {
+                  backgroundColor: '#391d6b',
+                  color: '#fff',
+                },
+                '&.Mui-selected:hover': {
+                  backgroundColor: '#391d6b',
+                },
+              }}
+            >
+              <ListItemIcon sx={{ color: selectedIndex === idx ? '#fff' : 'inherit' }}>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.label} primaryTypographyProps={{ style: { color: selectedIndex === idx ? '#fff' : undefined } }} />
+            </ListItemButton>
+          ))}
+        </List>
+      </Drawer>
+
+      <Box sx={{ flexGrow: 1, transition: 'margin 225ms', width: '100%' }}>
+        <AppBar position="fixed" sx={{ backgroundColor: '#391d6b', ml: drawerOpen ? `${drawerWidth}px` : 0, width: drawerOpen ? `calc(100% - ${drawerWidth}px)` : '100%' }}>
+          <Toolbar>
             <IconButton
               size="large"
-              aria-label="show 17 new notifications"
+              edge="start"
               color="inherit"
+              aria-label="open drawer"
+              sx={{ mr: 2 }}
+              onClick={() => setDrawerOpen(!drawerOpen)}
             >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
+              <MenuIcon />
             </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
+            <Tooltip title="Go to website">
+              <IconButton
+                size="large"
+                color="inherit"
+                aria-label="go to website"
+                onClick={() => window.open('/', '_blank', 'noopener')}
+                sx={{ mr: 1 }}
+              >
+                <HomeIcon />
+              </IconButton>
+            </Tooltip>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: { xs: 'none', sm: 'block' } }}
             >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
+              <div className="header-logo"> <a href="/" className="flex items-center justify-center h-full w-full">  <span>Party</span> Wings
+              </a> </div>
+            </Typography>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ 'aria-label': 'search' }}
+              />
+            </Search>
+            <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </Box>
+            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </AppBar>
+        {/* spacer so page content sits below the fixed AppBar */}
+        <Toolbar />
+        {renderMobileMenu}
+        {renderMenu}
+      </Box>
     </Box>
   );
 }
