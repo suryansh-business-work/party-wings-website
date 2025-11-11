@@ -32,14 +32,13 @@ const nav: any = headerMenu;
               <i class="fa-solid fa-store" aria-hidden="true"></i>
               <span>Register yourself as Vendor</span>
             </a>
-            <!-- Customer login / user dropdown placeholder -->
             <a
-              id="customer-login-link"
-              href="/customer-login"
+              id="vendor-login-link"
+              href="/vendor-login"
               class="text-white flex items-center gap-2 hover:text-amber-300"
             >
-              <i class="fa-solid fa-user" aria-hidden="true"></i>
-              <span>Customer Login</span>
+              <i class="fa-solid fa-user-tie" aria-hidden="true"></i>
+              <span>Vendor Login</span>
             </a>
 
             <div id="header-user" class="hidden relative">
@@ -255,7 +254,7 @@ const nav: any = headerMenu;
     const userJson =
       typeof window !== "undefined" ? localStorage.getItem("user") : null;
     const headerUser = document.getElementById("header-user");
-    const loginLink = document.getElementById("customer-login-link");
+    const loginLink = document.getElementById("vendor-login-link");
     if (userJson && headerUser && loginLink) {
       try {
         const user = JSON.parse(userJson);
