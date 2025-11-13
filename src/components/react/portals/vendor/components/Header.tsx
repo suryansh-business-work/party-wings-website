@@ -12,8 +12,6 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Tooltip from '@mui/material/Tooltip';
 import HomeIcon from '@mui/icons-material/Home';
@@ -73,7 +71,7 @@ export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
-  const [drawerOpen, setDrawerOpen] = React.useState(true)
+  const [drawerOpen, setDrawerOpen] = React.useState(false)
   // default selected: 3rd option (Store Management) — 0-based index 2
   const [selectedIndex, setSelectedIndex] = React.useState<number>(-1)
 
@@ -182,45 +180,7 @@ export default function Header() {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <Drawer
-        variant="persistent"
-        open={drawerOpen}
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          // place drawer below the fixed AppBar
-          '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box', },
-        }}
-      >
-        <Toolbar />
-        <Divider />
-        <List>
-          {navItems.map((item, idx) => (
-            <ListItemButton
-              key={item.label}
-              selected={selectedIndex === idx}
-              onClick={() => handleNavClick(idx, item.href)}
-              sx={{
-                borderRadius: 1,
-                mb: 0.5,
-                '&.Mui-selected': {
-                  backgroundColor: '#391d6b',
-                  color: '#fff',
-                },
-                '&.Mui-selected:hover': {
-                  backgroundColor: '#391d6b',
-                },
-              }}
-            >
-              <ListItemIcon sx={{ color: selectedIndex === idx ? '#fff' : 'inherit' }}>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.label} primaryTypographyProps={{ style: { color: selectedIndex === idx ? '#fff' : undefined } }} />
-            </ListItemButton>
-          ))}
-        </List>
-      </Drawer>
-
-      <Box sx={{ flexGrow: 1, transition: 'margin 225ms', width: '100%' }}>
-        <AppBar position="fixed" sx={{ backgroundColor: '#391d6b', ml: drawerOpen ? `${drawerWidth}px` : 0, width: drawerOpen ? `calc(100% - ${drawerWidth}px)` : '100%' }}>
+      <AppBar position="fixed" sx={{ backgroundColor: '#391d6b', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
           <Toolbar>
             <IconButton
               size="large"
@@ -287,13 +247,51 @@ export default function Header() {
                 <MoreIcon />
               </IconButton>
             </Box>
-          </Toolbar>
-        </AppBar>
-        {/* spacer so page content sits below the fixed AppBar */}
+        </Toolbar>
+      </AppBar>
+
+      <Drawer
+        variant="persistent"
+        open={drawerOpen}
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box' },
+        }}
+      >
         <Toolbar />
-        {renderMobileMenu}
-        {renderMenu}
+        <Divider />
+        <List>
+          {navItems.map((item, idx) => (
+            <ListItemButton
+              key={item.label}
+              selected={selectedIndex === idx}
+              onClick={() => handleNavClick(idx, item.href)}
+              sx={{
+                borderRadius: 1,
+                mb: 0.5,
+                '&.Mui-selected': {
+                  backgroundColor: '#e8def8',
+                  color: '#391d6b',
+                },
+                '&.Mui-selected:hover': {
+                  backgroundColor: '#d3c4f0',
+                },
+              }}
+            >
+              <ListItemIcon sx={{ color: selectedIndex === idx ? '#391d6b' : 'inherit' }}>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.label} primaryTypographyProps={{ style: { color: selectedIndex === idx ? '#391d6b' : undefined } }} />
+            </ListItemButton>
+          ))}
+        </List>
+      </Drawer>
+
+      <Box component="main" sx={{ flexGrow: 1, p: 3, transition: 'margin 225ms', ml: drawerOpen ? `${drawerWidth}px` : 0 }}>
+        <Toolbar />
       </Box>
+
+      {renderMobileMenu}
+      {renderMenu}
     </Box>
   );
 }
