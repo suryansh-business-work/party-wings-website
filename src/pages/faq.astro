@@ -1,0 +1,601 @@
+---
+import Page from '../layouts/Page.astro';
+import DynamicFaqs from '../components/dynamic-components/DynamicFaqs.astro';
+
+const faqData = [
+  {
+    category: "General",
+    tags: ["basics", "about", "company"],
+    faqs: [
+      {
+        question: "What is PartyWings?",
+        answer: "PartyWings is a comprehensive party planning and decoration service platform that connects customers with verified vendors for all types of celebrations and events."
+      },
+      {
+        question: "How does PartyWings work?",
+        answer: "Simply browse our services, select what you need, get instant quotes, and book your preferred vendor. We handle everything from decorations to photography, making party planning seamless."
+      },
+      {
+        question: "What areas do you serve?",
+        answer: "We currently operate in major cities across India. Check our service areas page or contact us to confirm availability in your location."
+      },
+      {
+        question: "Is there a minimum order value?",
+        answer: "The minimum order value varies by service and location. Typically, decoration packages start from ₹5,000. Contact us for specific details."
+      }
+    ]
+  },
+  {
+    category: "Booking & Orders",
+    tags: ["booking", "orders", "payment", "cancellation"],
+    faqs: [
+      {
+        question: "How do I book a service?",
+        answer: "Navigate to the service you want, fill in your event details, select your preferences, and proceed to checkout. You'll receive instant confirmation via email and SMS."
+      },
+      {
+        question: "Can I modify my booking after confirmation?",
+        answer: "Yes, you can modify bookings up to 48 hours before your event date. Log in to your account, go to 'My Orders', and select 'Modify Booking'."
+      },
+      {
+        question: "What payment methods do you accept?",
+        answer: "We accept all major credit/debit cards, UPI, net banking, and digital wallets. A small advance payment is required to confirm your booking."
+      },
+      {
+        question: "Can I cancel my order?",
+        answer: "Yes, cancellations are allowed based on our cancellation policy. Cancellations made 7+ days before the event receive a full refund minus processing fees. Check our refund policy for details."
+      },
+      {
+        question: "How do I track my order?",
+        answer: "Log in to your account and visit 'My Orders' to track your booking status, view vendor details, and communicate with your assigned vendor."
+      },
+      {
+        question: "Will I receive a booking confirmation?",
+        answer: "Yes, immediately after booking, you'll receive a confirmation email and SMS with your order details, vendor information, and event timeline."
+      }
+    ]
+  },
+  {
+    category: "Services & Pricing",
+    tags: ["services", "pricing", "packages", "customization"],
+    faqs: [
+      {
+        question: "What services does PartyWings offer?",
+        answer: "We offer birthday decorations, wedding planning, photography, balloon decorations, theme parties, corporate events, and custom event planning services."
+      },
+      {
+        question: "Do you offer customized packages?",
+        answer: "Absolutely! Every event is unique. Share your requirements with us, and we'll create a tailored package that fits your vision and budget."
+      },
+      {
+        question: "How is pricing determined?",
+        answer: "Pricing depends on the service type, event size, location, and customization requirements. Use our price calculator for instant estimates or request a custom quote."
+      },
+      {
+        question: "Are there any hidden charges?",
+        answer: "No hidden charges! The price you see in your quote includes all service costs. Additional charges may apply only if you request extra services during the event."
+      },
+      {
+        question: "Do you provide same-day service?",
+        answer: "Same-day service availability depends on vendor capacity and service type. Contact our support team for urgent bookings - we'll do our best to accommodate."
+      },
+      {
+        question: "What's included in decoration packages?",
+        answer: "Decoration packages typically include balloons, banners, backdrops, table settings, and theme props. Specific inclusions vary by package - check individual package details."
+      }
+    ]
+  },
+  {
+    category: "Vendors",
+    tags: ["vendors", "partnership", "verification"],
+    faqs: [
+      {
+        question: "How do I become a PartyWings vendor?",
+        answer: "Visit our 'Earn from PartyWings' page, fill out the vendor registration form with your business details, and our team will verify and onboard you within 48 hours."
+      },
+      {
+        question: "Are all vendors verified?",
+        answer: "Yes, every vendor goes through a rigorous verification process including document verification, quality checks, and background screening before joining our platform."
+      },
+      {
+        question: "Can I choose my vendor?",
+        answer: "Yes, you can view vendor profiles, ratings, reviews, and previous work before making your selection. We also provide recommendations based on your requirements."
+      },
+      {
+        question: "What if I'm not satisfied with the vendor?",
+        answer: "Your satisfaction is our priority. If you face any issues, contact our support team immediately. We'll work to resolve the issue or arrange an alternative vendor."
+      },
+      {
+        question: "Do vendors need to pay to join PartyWings?",
+        answer: "No registration fee! Vendors pay a small commission only on successful orders. We believe in a partnership model that grows with your business."
+      }
+    ]
+  },
+  {
+    category: "Events & Customization",
+    tags: ["events", "themes", "customization", "planning"],
+    faqs: [
+      {
+        question: "What types of events can you handle?",
+        answer: "We handle all types of events including birthdays, weddings, anniversaries, baby showers, corporate events, product launches, and festival celebrations."
+      },
+      {
+        question: "Do you provide theme-based decorations?",
+        answer: "Yes! We offer 50+ themes including superhero, princess, vintage, tropical, bollywood, and custom themes. Browse our theme gallery for inspiration."
+      },
+      {
+        question: "Can I see samples before booking?",
+        answer: "Yes, vendor profiles include portfolios with photos and videos of previous work. You can also request a consultation to discuss your vision in detail."
+      },
+      {
+        question: "How far in advance should I book?",
+        answer: "We recommend booking at least 2-3 weeks in advance for regular events and 1-2 months for large celebrations or weddings to ensure vendor availability."
+      },
+      {
+        question: "Do you provide event planning services?",
+        answer: "Yes, we offer end-to-end event planning including venue selection, vendor coordination, timeline management, and on-ground execution support."
+      }
+    ]
+  },
+  {
+    category: "Delivery & Setup",
+    tags: ["delivery", "setup", "logistics", "timing"],
+    faqs: [
+      {
+        question: "Who handles the setup and decoration?",
+        answer: "Our professional vendors handle complete setup and decoration at your venue. They arrive on time, set up everything, and ensure it matches your expectations."
+      },
+      {
+        question: "What if the vendor is late?",
+        answer: "Vendors are committed to punctuality. In rare cases of delay, you'll be notified immediately. Late arrivals without valid reasons may result in compensation or refunds."
+      },
+      {
+        question: "Do you provide cleanup services?",
+        answer: "Yes, basic cleanup after the event is included in most packages. Vendors will remove decorations and dispose of materials responsibly."
+      },
+      {
+        question: "Can decorations be set up a day before?",
+        answer: "Yes, for advance setup requests, coordinate with your vendor. Additional charges may apply based on venue access and decoration type."
+      },
+      {
+        question: "What happens in case of bad weather?",
+        answer: "For outdoor events, we help you create backup plans. You can reschedule (subject to vendor availability) or shift to an indoor setup based on your booking terms."
+      }
+    ]
+  },
+  {
+    category: "Support & Contact",
+    tags: ["support", "help", "contact", "assistance"],
+    faqs: [
+      {
+        question: "How can I contact customer support?",
+        answer: "Reach us via phone at +91-XXXXXXXXXX, email at support@partywings.com, or use the live chat on our website. We're available 9 AM - 9 PM daily."
+      },
+      {
+        question: "Do you provide 24/7 support?",
+        answer: "Our standard support is 9 AM - 9 PM. For urgent event-day assistance, premium customers get access to our 24/7 emergency hotline."
+      },
+      {
+        question: "How do I report an issue?",
+        answer: "Log in to your account, go to 'Support', and create a ticket describing the issue. You can also call or email us directly for immediate assistance."
+      },
+      {
+        question: "Can I get help with event planning?",
+        answer: "Absolutely! Our event planning experts are available for consultations. Book a free consultation call through your account or contact our support team."
+      },
+      {
+        question: "Do you have a mobile app?",
+        answer: "Yes, our mobile app is available on iOS and Android. Download it for easier booking, real-time updates, and exclusive app-only deals."
+      }
+    ]
+  },
+  {
+    category: "Refunds & Policies",
+    tags: ["refund", "policy", "terms", "cancellation"],
+    faqs: [
+      {
+        question: "What is your refund policy?",
+        answer: "Refunds are processed based on cancellation timing: 7+ days = 100% refund, 3-7 days = 75% refund, 1-3 days = 50% refund, less than 24 hours = no refund. Processing fees are non-refundable."
+      },
+      {
+        question: "How long does a refund take?",
+        answer: "Approved refunds are processed within 5-7 business days to your original payment method. You'll receive email confirmation once processed."
+      },
+      {
+        question: "What if the vendor cancels?",
+        answer: "If a vendor cancels, we'll immediately assign an alternative vendor or provide a full refund with compensation for the inconvenience."
+      },
+      {
+        question: "Can I get a partial refund for unused services?",
+        answer: "Partial refunds for unused add-on services can be requested within 24 hours of the event. Contact support with details for review."
+      },
+      {
+        question: "What is your privacy policy?",
+        answer: "We take your privacy seriously. Your data is encrypted and never shared with third parties without consent. Read our detailed privacy policy on the website."
+      }
+    ]
+  }
+];
+
+const pageTitle = "Frequently Asked Questions";
+const pageDescription = "Find answers to common questions about PartyWings services, bookings, vendors, and more.";
+---
+
+<Page title={pageTitle} description={pageDescription}>
+  <div class="bg-gradient-to-b from-purple-50 to-white">
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-16">
+      <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto text-center">
+          <h1 class="text-4xl md:text-5xl font-bold mb-4">How Can We Help You?</h1>
+          <p class="text-lg md:text-xl mb-8 opacity-90">
+            Find answers to frequently asked questions about our services, bookings, and more
+          </p>
+          <div id="search-container" class="relative">
+            <input
+              type="text"
+              id="faq-search"
+              placeholder="Search for answers..."
+              class="w-full px-6 py-4 rounded-full text-gray-800 text-lg focus:outline-none focus:ring-4 focus:ring-purple-300 shadow-lg"
+            />
+            <svg
+              class="absolute right-6 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              ></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="container mx-auto px-4 -mt-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+          <div class="text-3xl font-bold text-purple-600 mb-2" id="total-faqs">0</div>
+          <div class="text-gray-600">Total FAQs</div>
+        </div>
+        <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+          <div class="text-3xl font-bold text-purple-600 mb-2" id="total-categories">0</div>
+          <div class="text-gray-600">Categories</div>
+        </div>
+        <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+          <div class="text-3xl font-bold text-purple-600 mb-2" id="search-results">0</div>
+          <div class="text-gray-600">Search Results</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="container mx-auto px-4 py-12">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex flex-wrap gap-3 justify-center mb-8" id="category-filters">
+          <button
+            class="category-btn active px-6 py-3 rounded-full font-medium transition-all duration-200"
+            data-category="all"
+          >
+            All Categories
+          </button>
+        </div>
+
+        <!-- FAQ Accordions -->
+        <div id="faq-container" class="space-y-8">
+          {faqData.map((categoryData, catIndex) => (
+            <div class="category-section" data-category={categoryData.category} data-tags={categoryData.tags.join(',')}>
+              <div class="mb-6">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">{categoryData.category}</h2>
+                <div class="flex flex-wrap gap-2">
+                  {categoryData.tags.map(tag => (
+                    <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              
+              <div class="space-y-4">
+                {categoryData.faqs.map((faq, faqIndex) => {
+                  const accordionId = `accordion-${catIndex}-${faqIndex}`;
+                  return (
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden" data-question={faq.question.toLowerCase()} data-answer={faq.answer.toLowerCase()}>
+                      <button
+                        class="accordion-button w-full px-6 py-4 text-left flex justify-between items-center hover:bg-purple-50 transition-colors duration-200"
+                        data-target={accordionId}
+                      >
+                        <span class="font-semibold text-gray-800 pr-4">{faq.question}</span>
+                        <svg
+                          class="accordion-icon w-6 h-6 text-purple-600 transform transition-transform duration-200 flex-shrink-0"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                      </button>
+                      <div
+                        id={accordionId}
+                        class="accordion-content max-h-0 overflow-hidden transition-all duration-300"
+                      >
+                        <div class="px-6 py-4 text-gray-600 leading-relaxed border-t border-gray-100">
+                          {faq.answer}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="hidden text-center py-16">
+          <svg class="w-24 h-24 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <h3 class="text-2xl font-semibold text-gray-700 mb-2">No Results Found</h3>
+          <p class="text-gray-500">Try adjusting your search or filter to find what you're looking for.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact CTA -->
+    <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-12">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-4">Still Have Questions?</h2>
+        <p class="text-lg mb-6 opacity-90">Our support team is here to help you 9 AM - 9 PM daily</p>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <a
+            href="/contact"
+            class="bg-white text-purple-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-200 shadow-lg"
+          >
+            Contact Support
+          </a>
+          <a
+            href="tel:+911234567890"
+            class="border-2 border-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-purple-600 transition-colors duration-200"
+          >
+            Call Us Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</Page>
+
+<style>
+  .category-btn {
+    background: white;
+    color: #6b7280;
+    border: 2px solid #e5e7eb;
+  }
+
+  .category-btn:hover {
+    border-color: #9333ea;
+    color: #9333ea;
+  }
+
+  .category-btn.active {
+    background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
+  }
+
+  .accordion-content {
+    transition: max-height 0.3s ease-out;
+  }
+
+  .accordion-button {
+    cursor: pointer;
+  }
+
+  .accordion-button[aria-expanded="true"] .accordion-icon {
+    transform: rotate(180deg);
+  }
+  
+  .hidden {
+    display: none !important;
+  }
+
+  .faq-item.highlight {
+    animation: highlight 0.5s ease-in-out;
+  }
+
+  @keyframes highlight {
+    0%, 100% { background-color: white; }
+    50% { background-color: #faf5ff; }
+  }
+
+  mark {
+    background-color: #fef3c7;
+    padding: 2px 4px;
+    border-radius: 2px;
+  }
+</style>
+
+<script is:inline>
+  // Initialize stats
+  function updateStats() {
+    const totalFaqs = document.querySelectorAll('.faq-item').length;
+    const totalCategories = document.querySelectorAll('.category-section').length;
+    const visibleFaqs = document.querySelectorAll('.faq-item:not(.hidden)').length;
+    
+    const totalFaqsEl = document.getElementById('total-faqs');
+    const totalCategoriesEl = document.getElementById('total-categories');
+    const searchResultsEl = document.getElementById('search-results');
+    
+    if (totalFaqsEl) totalFaqsEl.textContent = totalFaqs.toString();
+    if (totalCategoriesEl) totalCategoriesEl.textContent = totalCategories.toString();
+    if (searchResultsEl) searchResultsEl.textContent = visibleFaqs.toString();
+  }
+
+  // Generate category filter buttons
+  function initializeCategoryButtons() {
+    const categories = Array.from(document.querySelectorAll('.category-section'));
+    const filterContainer = document.getElementById('category-filters');
+    
+    if (!filterContainer) return;
+    
+    categories.forEach(section => {
+      const category = section.getAttribute('data-category');
+      if (!category) return;
+      
+      const button = document.createElement('button');
+      button.className = 'category-btn px-6 py-3 rounded-full font-medium transition-all duration-200';
+      button.textContent = category;
+      button.setAttribute('data-category', category);
+      filterContainer.appendChild(button);
+    });
+  }
+
+  // Category filter functionality
+  function setupCategoryFilters() {
+    const filterButtons = document.querySelectorAll('.category-btn');
+    
+    filterButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const category = button.getAttribute('data-category');
+        
+        // Update active state
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        // Filter categories
+        const sections = document.querySelectorAll('.category-section');
+        sections.forEach(section => {
+          if (category === 'all' || section.getAttribute('data-category') === category) {
+            section.classList.remove('hidden');
+          } else {
+            section.classList.add('hidden');
+          }
+        });
+        
+        // Clear search
+        const searchInput = document.getElementById('faq-search');
+        if (searchInput) searchInput.value = '';
+        
+        updateStats();
+        checkNoResults();
+      });
+    });
+  }
+
+  // Accordion functionality
+  function setupAccordions() {
+    const accordionButtons = document.querySelectorAll('.accordion-button');
+    
+    accordionButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = button.getAttribute('data-target');
+        if (!targetId) return;
+        
+        const content = document.getElementById(targetId);
+        if (!content) return;
+        
+        const isExpanded = button.getAttribute('aria-expanded') === 'true';
+        
+        // Toggle current accordion
+        if (isExpanded) {
+          button.setAttribute('aria-expanded', 'false');
+          content.style.maxHeight = '0';
+        } else {
+          button.setAttribute('aria-expanded', 'true');
+          content.style.maxHeight = content.scrollHeight + 'px';
+        }
+      });
+    });
+  }
+
+  // Search functionality
+  function setupSearch() {
+    const searchInput = document.getElementById('faq-search');
+    if (!searchInput) return;
+    
+    let searchTimeout;
+    
+    searchInput.addEventListener('input', (e) => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        const searchTerm = e.target.value.toLowerCase().trim();
+        const faqItems = document.querySelectorAll('.faq-item');
+        const categorySections = document.querySelectorAll('.category-section');
+        
+        if (searchTerm === '') {
+          // Show all
+          faqItems.forEach(item => item.classList.remove('hidden'));
+          categorySections.forEach(section => section.classList.remove('hidden'));
+        } else {
+          // Filter based on search
+          faqItems.forEach(item => {
+            const question = item.getAttribute('data-question') || '';
+            const answer = item.getAttribute('data-answer') || '';
+            
+            if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+              item.classList.remove('hidden');
+              item.classList.add('highlight');
+              setTimeout(() => item.classList.remove('highlight'), 500);
+            } else {
+              item.classList.add('hidden');
+            }
+          });
+          
+          // Hide empty category sections
+          categorySections.forEach(section => {
+            const visibleItems = section.querySelectorAll('.faq-item:not(.hidden)');
+            if (visibleItems.length === 0) {
+              section.classList.add('hidden');
+            } else {
+              section.classList.remove('hidden');
+            }
+          });
+        }
+        
+        updateStats();
+        checkNoResults();
+      }, 300);
+    });
+  }
+
+  // Check if no results found
+  function checkNoResults() {
+    const visibleItems = document.querySelectorAll('.faq-item:not(.hidden)');
+    const noResults = document.getElementById('no-results');
+    const faqContainer = document.getElementById('faq-container');
+    
+    if (!noResults || !faqContainer) return;
+    
+    if (visibleItems.length === 0) {
+      noResults.classList.remove('hidden');
+      faqContainer.classList.add('hidden');
+    } else {
+      noResults.classList.add('hidden');
+      faqContainer.classList.remove('hidden');
+    }
+  }
+
+  // Initialize everything
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+  
+  function init() {
+    initializeCategoryButtons();
+    setupCategoryFilters();
+    setupAccordions();
+    setupSearch();
+    updateStats();
+  }
+</script>
